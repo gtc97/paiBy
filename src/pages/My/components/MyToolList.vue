@@ -1,0 +1,62 @@
+<template>
+  <div class="tool">
+    <div class="tool-list-item">
+      <van-cell title="邀请码" class="icon" icon="../../../../static/ercode_icon.png" to="/invitation" is-link />
+      <van-cell title="分享奖励" class="icon" icon="../../../../static/share_gift_icon.png" to="/rewards" is-link />
+      <van-cell title="收货地址" class="icon" icon="../../../../static/location_icon1.png" to="/address" is-link />
+      <van-cell title="收款设置" class="icon" icon="../../../../static/money_icon2.png" to="/seting" is-link />
+      <van-cell title="我的签约" class="icon" icon="../../../../static/signing_icon.png" to="/signing" is-link />
+    </div>
+  </div>
+</template>
+<script language="javascript" src="https://uapi.pop800.com/800.js?n=967562&s=01&p=l&l=cn"></script><div style="display:none;">< a href=" ">POP800在线客服系统</ a></div>
+<script>
+export default {
+  name: 'MyToolList'
+}
+</script>
+
+<style lang="less" scoped>
+.tool {
+
+  .tool-list-item {
+    background-color: #fff;
+    padding: 0 0.4rem /* 30/75 */;
+    .van-cell {
+      position: relative;
+      line-height: 0.9733rem /* 73/75 */;
+      height: 0.9733rem /* 73/75 */;
+      padding: 0 0 0 0.6267rem /* 47/75 */;
+      &.van-cell:not(:last-child)::after {
+        border-bottom: 0.02667rem solid #ddd;
+        left: 0.6267rem /* 47/75 */;
+      }
+      .van-cell__title {
+        font-size: 0.3467rem /* 26/75 */;
+        color: #333;
+      }
+      .van-cell__left-icon {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0;
+      }
+      .van-cell__right-icon {
+        position: absolute;
+        right: -0.08rem /* -6/75 */;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+    .icon{
+      img {
+        margin-top: -.1333rem /* -10/75 */;
+        vertical-align: middle;
+      }
+    }
+  }
+  .tool-list2 {
+    margin-top: 0.2667rem /* 20/75 */;
+  }
+}
+</style>
