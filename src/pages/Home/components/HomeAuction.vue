@@ -1,7 +1,9 @@
 <template>
     <div class="auction">
-        <div v-for="(item,index) in goodsCatList" :key="index">
-            <div class="auction-header">
+      <div>
+
+        <!--<div v-for="(item,index) in goodsCatList" :key="index">
+             <div class="auction-header">
                 <div class="auction-header-title">
                     <van-icon
                         class="icon"
@@ -11,12 +13,13 @@
                     <h2 class="text">{{ item.parentName }}</h2>
                 </div>
                 <div class="auction-header-time">{{ item.onlineTime }}</div>
-            </div>
+            </div> -->
             <div class="auction-content">
-                <div v-for="(v,k) in goodsCatList[index].list" :key="k" class="auction-start">
+                <div v-for="(v,k) in goodsCatList" :key="k" class="auction-start">
+                  <div class="auction-header-time">{{ v.onlineTime }}</div>
                     <div v-if="v.statusName == '交易中'">
                         <router-link
-                            :to="{path: '/goods', query: {type: v.catId, title: item.parentName}}"
+                            :to="{path: '/goods', query: {type: v.catId, title: v.catName}}"
                             class="auction-start-item current-start"
                         >
                             <img :src="v.catLogo" width="100%" alt="2" />
@@ -25,7 +28,7 @@
                     </div>
                     <div v-if="v.statusName == '已结束'">
                         <router-link
-                            :to="{path: '/goods', query: {type: v.catId, title: item.parentName}}"
+                            :to="{path: '/goods', query: {type: v.catId, title: v.catName}}"
                             class="auction-start-item current-end"
                         >
                             <img :src="v.catLogo" width="100%" alt="2" />
@@ -34,7 +37,7 @@
                     </div>
                     <div v-if="v.statusName == '未开始'">
                         <router-link
-                            :to="{path: '/goods', query: {type: v.catId, title: item.parentName}}"
+                            :to="{path: '/goods', query: {type: v.catId, title: v.catName}}"
                             class="auction-start-item current-ready"
                         >
                             <img :src="v.catLogo" width="100%" alt="2" />
@@ -42,7 +45,8 @@
                         </router-link>
                     </div>
                 </div>
-            </div>
+                </div>
+            <!-- </div  -->
         </div>
     </div>
 </template>

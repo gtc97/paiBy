@@ -12,6 +12,7 @@
         <div class="title-r fr">中国(+86)</div>
       </div>
       <div class="input-wrap">
+        
         <input v-model="loginForm.userPhone" type="text" placeholder="请输入您的手机号" maxlength="11">
       </div>
       <div class="input-wrap vercode-box">
@@ -29,7 +30,7 @@
         没有账号？
         <router-link :to="{path:'/register',query:{invite:1}}">点击注册</router-link>
 
-        <a href="/down/" >下载App</a>
+        <!-- <a href="/down/" >下载App</a> -->
       </div>
     </div>
   </div>

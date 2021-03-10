@@ -18,7 +18,13 @@ export default {
     return {
       userInfo: JSON.parse(localStorage.getItem('USER'))
     }
-  }
+  },
+  created(){
+    
+  },
+  mounted(){
+    
+  },
 }
 </script>
 
