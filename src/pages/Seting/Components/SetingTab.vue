@@ -20,7 +20,7 @@
                     />
                     <van-field v-model="alipay.phone" label="手机号" placeholder="请输入手机号"></van-field>
                 </van-cell-group>
-                <div class="submit-btn" @click="handleSubmitalipayPay">确认并保存</div>
+                <div class="submit-btn" @click="handleSubmitalipayPay" :style="'background:' + sysColor">确认并保存</div>
             </van-tab>
             <van-tab title="微信" class="weixin">
                 <template #title>
@@ -41,7 +41,7 @@
                     />
                     <van-field v-model="weixin.phone" label="手机号" placeholder="请输入手机号"></van-field>
                 </van-cell-group>
-                <div class="submit-btn" @click="handleSubmitWeixin">确认并保存</div>
+                <div class="submit-btn" @click="handleSubmitWeixin" :style="'background:'+ sysColor +';'">确认并保存</div>
             </van-tab>
             <van-tab class="unionpay">
                 <template #title>
@@ -57,7 +57,7 @@
                     <van-field v-model="unionpay.cardNum" label="银行卡号" placeholder="请输入银行卡号" />
                     <van-field v-model="unionpay.phone" label="手机号" placeholder="请输入手机号"></van-field>
                 </van-cell-group>
-                <div class="submit-btn" @click="handleSubmitUnionpayPay">确认并保存</div>
+                <div class="submit-btn" @click="handleSubmitUnionpayPay" :style="'background:'+ sysColor +';'">确认并保存</div>
             </van-tab>
         </van-tabs>
     </div>
@@ -96,7 +96,8 @@ export default {
                 bankOtherName: "",
                 cardNum: ""
             },
-            active: 0
+            active: 0,
+            sysColor: localStorage.getItem('styleColor')
         };
     },
     watch: {

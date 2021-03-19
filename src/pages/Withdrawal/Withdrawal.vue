@@ -2,7 +2,9 @@
   <div class="container withdrawal">
     <common-header title="提现" bg="#fff" />
     <div class="pay-type">
-      <div class="pay-type-title">提现方式 <small> * 每天只允许提现一次！</small></div>
+      <div class="pay-type-title">
+        提现方式 <small> * 每天只允许提现一次！</small>
+      </div>
       <van-radio-group v-model="radio" class="pay-type-list">
         <div class="pay-type-item">
           <div class="icon-left icon2" />
@@ -21,87 +23,97 @@
         </div>
       </van-radio-group>
       <div class="input-title">提现金额</div>
-      <input v-model="money" type="text" class="money-input" placeholder="￥" >
-      <div class="submit-btn" @click="handlePay">立即提现</div>
+      <input v-model="money" type="text" class="money-input" placeholder="￥" />
+      <div
+        class="submit-btn"
+        @click="handlePay"
+        :style="'background:' + sysColor + ';'"
+      >
+        立即提现
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { Toast } from 'vant'
+import { Toast } from "vant";
 export default {
-  name: 'Withdrawal',
+  name: "Withdrawal",
   data() {
     return {
-      radio: '1',
+      radio: "1",
       payTypeList: [],
       userPayInfo: [],
-      money: '',
+      money: "",
       payType: [
         {
           type: 1,
-          name: '银行卡',
-          iconClass: 'icon2',
-          img: ''
+          name: "银行卡",
+          iconClass: "icon2",
+          img: "",
         },
         {
           type: 2,
-          name: '支付宝',
-          iconClass: 'icon3',
-          img: ''
+          name: "支付宝",
+          iconClass: "icon3",
+          img: "",
         },
         {
           type: 3,
-          name: '微信',
-          iconClass: 'icon4',
-          img: ''
-        }
-      ]
-    }
+          name: "微信",
+          iconClass: "icon4",
+          img: "",
+        },
+      ],
+      sysColor: localStorage.getItem("styleColor"),
+    };
   },
   mounted() {
-    this.getUserPayInfo()
+    this.getUserPayInfo();
+    setTimeout(function () {
+      this.sysColor = localStorage.getItem("styleColor");
+    }, 1000);
   },
   methods: {
     getUserPayInfo() {
-      const userId = JSON.parse(localStorage.getItem('USER')).userId
-      console.log(userId)
+      const userId = JSON.parse(localStorage.getItem("USER")).userId;
+      console.log(userId);
       // 获取用户支付信息
-      this.$api.getUserPayInfo({ userId }).then(res => {
-        this.userPayInfo = res.data
+      this.$api.getUserPayInfo({ userId }).then((res) => {
+        this.userPayInfo = res.data;
         for (let o = 0; o < this.payType.length; o++) {
-          const ele1 = this.payType[o]
+          const ele1 = this.payType[o];
           for (let i = 0; i < this.userPayInfo.length; i++) {
-            const ele2 = this.userPayInfo[i]
+            const ele2 = this.userPayInfo[i];
             if (ele1.type === ele2.type) {
-              ele1.img = this.userPayInfo[i].img
-              this.payTypeList.push(ele1)
+              ele1.img = this.userPayInfo[i].img;
+              this.payTypeList.push(ele1);
             }
           }
         }
-        console.log(this.payTypeList)
-      })
+        console.log(this.payTypeList);
+      });
     },
     handlePay() {
       if (parseInt(this.money) <= 0 || this.money.length <= 0) {
-        Toast('提现失败，您的金额有误，请重新输入')
-        return
+        Toast("提现失败，您的金额有误，请重新输入");
+        return;
       }
       this.$api.draw({ money: this.money, type: this.radio }).then((res) => {
-        if (res.msg === '请先上传收款信息') {
-          Toast('请先上传收款信息')
-          this.$router.push({ path: '/seting' })
-          return
+        if (res.msg === "请先上传收款信息") {
+          Toast("请先上传收款信息");
+          this.$router.push({ path: "/seting" });
+          return;
         } else if (res.status === -1) {
-          Toast(res.msg)
-          return
+          Toast(res.msg);
+          return;
         }
-        Toast(res.msg)
-        this.$router.push({ path: '/wallet' })
-      })
-    }
-  }
-}
+        Toast(res.msg);
+        this.$router.push({ path: "/wallet" });
+      });
+    },
+  },
+};
 </script>
 
 <style lang="less">
@@ -145,7 +157,7 @@ export default {
     background-color: #fff;
     box-sizing: border-box;
     padding: 0.8rem /* 60/75 */ 0.4rem /* 30/75 */ 0.4rem /* 30/75 */;
-    margin: .4rem /* 30/75 */ auto 0;
+    margin: 0.4rem /* 30/75 */ auto 0;
     width: 9.2rem /* 690/75 */;
     box-shadow: 0px 0px 0.2133rem /* 16/75 */ 0px rgba(0, 0, 0, 0.15);
     border-radius: 0.2667rem /* 20/75 */;

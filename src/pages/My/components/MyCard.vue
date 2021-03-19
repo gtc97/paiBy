@@ -34,12 +34,14 @@ export default {
 <style lang="less">
 .card {
   .card-info {
+    border-radius: 0.33333rem !important;
+    box-shadow: 0 0 0.22667rem 0 rgba(0, 0, 0, 0.15);
     .van-grid-item {
       height: 100%;
       .van-grid-item__content {
         padding: 0;
         .van-icon {
-          margin-top: 0.1333rem /* 10/75 */;
+          // margin-top: 0.1333rem /* 10/75 */;
         }
         .van-grid-item__text {
           margin-top: 0;
@@ -77,12 +79,15 @@ export default {
 <style lang="less" scoped>
 .card {
   background-color: #fff;
-  padding: 0.6667rem /* 50/75 */ 0.4rem /* 30/75 */ 0.2667rem /* 20/75 */;
-  height: 1.6rem /* 120/75 */;
+  // padding: 0.66rem /* 50/75 */ 0.4rem /* 30/75 */ 0.2667rem /* 20/75 */;
+  padding: 0.4rem /* 50/75 */ 0.4rem /* 30/75 */ 0.2667rem /* 20/75 */;
+  height: 1.8rem /* 120/75 */;
   .card-info {
+    //     border-radius: 0.33333rem !important;
+    // box-shadow: 0 0 0.22667rem 0 rgba(0, 0, 0, 0.15);
     overflow: hidden;
-    box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.15);
-    border-radius: 20px;
+    box-shadow: 0px 0px 0.22667rem 0px rgba(0, 0, 0, 0.15);
+    border-radius: 0.33333rem;
     height: 100%;
     .van-grid-item {
       height: 100%;

@@ -1,5 +1,5 @@
 <template>
-  <div class="balance">
+  <div class="balance" :style="'background:' + sysColor">
     <h3 class="balance-title">账户余额（元）</h3>
     <p class="balance-content">
       ¥{{ money }}
@@ -17,7 +17,18 @@ export default {
         return ''
       }
     }
-  }
+  },
+  data() {
+    return {
+      sysColor: localStorage.getItem("styleColor"),
+    };
+  },
+  created(){
+    setTimeout(function () {
+      this.sysColor = localStorage.getItem("styleColor");
+    }, 1000);
+  },
+
 }
 </script>
 

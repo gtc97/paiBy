@@ -1,6 +1,10 @@
 <template>
   <div class="reward-extract">
     <div class="reward-extract-item">
+      <i class="item-label">我的佣金</i>
+      <b class="item-info" v-html="'¥' + drawMoney">0.00</b>
+    </div>
+    <div class="reward-extract-item">
       <i class="item-label">可提现佣金</i>
       <b class="item-info" v-html="'¥' + drawMoney">0.00</b>
     </div>
@@ -8,7 +12,7 @@
       <i class="item-label">当前提现进度：</i>
       <b class="item-info">无</b>
     </div>
-    <router-link to="/withdrawal" class="extract-btn">
+    <router-link to="/withdrawalCommission" class="extract-btn" :style="'background:' + sysColor + ';'">
       申请提现
     </router-link>
   </div>
@@ -25,6 +29,11 @@ export default {
       default() {
         return ''
       }
+    }
+  },
+  data(){
+    return{
+      sysColor:localStorage.getItem('styleColor')
     }
   }
   // methods: {

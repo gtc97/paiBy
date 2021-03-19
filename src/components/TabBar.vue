@@ -6,14 +6,22 @@
         <img :src="props.active ? '../../static/home_icon_active.png' : '../../static/home_icon.png' " >
       </template>
     </van-tabbar-item>
-    <van-tabbar-item to="/rewards">
+    <van-tabbar-item to="/rewardsNew">
       <span>分享奖励</span>
       <template #icon="props">
         <img :src="props.active ? '../../static/gift_icon_active.png' : '../../static/gift_icon.png' " >
       </template>
     </van-tabbar-item>
+
+    <van-tabbar-item to="/dhgoods">
+      <span>兑换商城</span>
+      <template #icon="props">
+        <img :src="props.active ? '../../static/dh_icon_active.png' : '../../static/dh_icon.png' " >
+      </template>
+    </van-tabbar-item>
+
     <van-tabbar-item to="/notice">
-      <span>公告</span>
+      <span>资讯</span>
       <template #icon="props">
         <img :src="props.active ? '../../static/notice_icon_active.png' : '../../static/notice_icon.png' " >
       </template>

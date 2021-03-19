@@ -5,7 +5,7 @@
       <!-- <van-cell-group class="username">
         <van-field v-model="user.name" placeholder="请输入用户名" />
       </van-cell-group> -->
-      <div class="username">極翠缘</div>
+      <div class="username">头像</div>
     </div>
     <div class="inner-wrap">
       <van-cell-group>
@@ -36,7 +36,7 @@
         <van-checkbox v-model="agreement" checked-color="#FDB428">
           阅读并同意
           <router-link to="/agreement">《用户注册协议》</router-link>
-          <a href="/down/" style="margin-left: 4em">点击下载App</a>
+          <!-- <a href="/down/" style="margin-left: 4em">点击下载App</a> -->
         </van-checkbox>
       </div>
       <div class="submit-btn" @click="handleSubmitRegister">完成并登录</div>

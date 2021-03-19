@@ -25,7 +25,7 @@ export default {
 
 <style lang="less" scoped>
 .container {
-  background-color: #f5f5f5;
+  // background-color: #f5f5f5;
   min-height: calc(100vh - 1.33333rem);
 }
 </style>

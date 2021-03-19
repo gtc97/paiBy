@@ -4,7 +4,8 @@
     <div class="qr-code-wrap tc">
       <!-- <div class="invite-title">邀请码</div> -->
       <div>
-        <p class="invite-code">{{ inviteCode }}</p>
+        <p class="invite-code"></p>
+        <!-- {{ inviteCode }} -->
         <div id="qrcode" class="qr-code"></div>
       </div>
       <!-- <p class="tips">扫码关注加入我们</p> -->
@@ -50,7 +51,8 @@ export default {
 .container {
   min-height: 100vh;
   background-size: 100%;
-  background: url("../../../static/bg.jpg") no-repeat;
+  // background: url("../../../static/bg.jpg") no-repeat;
+  background: url("../../../static/back.jpg") no-repeat;
   background-color: #E2F0E5;
   background-size: 100%;
   #qrcode {
@@ -74,7 +76,7 @@ export default {
       margin-top: 0.0667rem /* 5/75 */;
       color: #fc6a4f;
       font-size: 0.64rem /* 48/75 */;
-      margin-top: 5rem;
+      margin-top: 6rem;
     }
     .tips {
       margin-top: 0.4rem /* 30/75 */;

@@ -28,7 +28,7 @@
         </div>-->
       </van-radio-group>
       <div class="add-address-wrap">
-        <router-link to="/addAddress" class="add-address">新增收货地址</router-link>
+        <router-link to="/addAddress" class="add-address" :style="'background:' + sysColor">新增收货地址</router-link>
       </div>
     </div>
     <EditAddress v-if="isShowEdit" :info="info" @editSave="handleEditSave"/>
@@ -48,10 +48,14 @@ export default {
       addressList: [],
       info: {},
       radio: 1,
-      isShowEdit: 0
+      isShowEdit: 0,
+      sysColor: localStorage.getItem("styleColor"),
     }
   },
   mounted() {
+    setTimeout(function () {
+      this.sysColor = localStorage.getItem("styleColor");
+    }, 1000);
     this.getAddressList()
   },
   methods: {

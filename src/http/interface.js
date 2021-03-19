@@ -21,13 +21,13 @@ export const notifyDetails = data => {
 
 // 商品列表
 export const goodsList = data => {
-        return axios({
-            url: '/goods/goodsList',
-            method: 'post',
-            data
-        })
-    }
-    // 商品详情
+    return axios({
+        url: '/goods/goodsList',
+        method: 'post',
+        data
+    })
+}
+// 商品详情
 export const goodsDetails = data => {
     return axios({
         url: '/goods/goodsDetail',
@@ -54,6 +54,22 @@ export const login = data => {
     })
 }
 
+// 微信登录
+export const WXLogin = () => {
+    return axios({
+        url: '/login/wxlogin',
+        method: 'get',
+    })
+}
+
+// 微信登录2
+export const wxlogin2 = () => {
+    return axios({
+        url: '/login/wxlogin2',
+        method: 'get',
+    })
+}
+
 // 退出登录
 export const loginOut = data => {
     return axios({
@@ -65,13 +81,13 @@ export const loginOut = data => {
 
 // 获取验证码
 export const verificationCode = data => {
-        return axios({
-            url: '/common/sendSms',
-            method: 'post',
-            data
-        })
-    }
-    // 新增收货地址
+    return axios({
+        url: '/common/sendSms',
+        method: 'post',
+        data
+    })
+}
+// 新增收货地址
 export const addAddress = data => {
     return axios({
         url: '/user/addaddress',
@@ -116,6 +132,24 @@ export const homeData = data => {
     })
 }
 
+// 首页classification
+export const classification = data => {
+    return axios({
+        url: '/goods/goodsCatList',
+        method: 'post',
+        data
+    })
+}
+
+// 微信支付返回支付参数
+export const WXPay = data => {
+    return axios({
+        url: '/user/we_pay',
+        method: 'get',
+        data
+    })
+}
+
 // 删除地址
 export const deleteAddress = data => {
     return axios({
@@ -145,13 +179,13 @@ export const addressList = data => {
 
 // 查询默认地址
 export const defaultAddress = data => {
-        return axios({
-            url: '/user/getaddress',
-            method: 'post',
-            data
-        })
-    }
-    // 设置默认收货地址
+    return axios({
+        url: '/user/getaddress',
+        method: 'post',
+        data
+    })
+}
+// 设置默认收货地址
 export const setDefaultAddress = data => {
     return axios({
         url: '/user/setDefaultAddress',
@@ -180,21 +214,21 @@ export const createOrder = data => {
 
 // 订单列表
 export const orderList = data => {
-        return axios({
-            url: '/user/buyOrderList',
-            method: 'post',
-            data
-        })
-    }
-    // 取消订单
+    return axios({
+        url: '/user/buyOrderList',
+        method: 'post',
+        data
+    })
+}
+// 取消订单
 export const cancelOrder = data => {
-        return axios({
-            url: '/user/cancelOrder',
-            method: 'post',
-            data
-        })
-    }
-    // 分享奖励
+    return axios({
+        url: '/user/cancelOrder',
+        method: 'post',
+        data
+    })
+}
+// 分享奖励
 export const shareReward = data => {
     return axios({
         url: '/user/reward',
@@ -205,21 +239,21 @@ export const shareReward = data => {
 
 // 提现历史
 export const drawHistory = data => {
-        return axios({
-            url: '/user/drawList',
-            method: 'post',
-            data
-        })
-    }
-    // 提现
+    return axios({
+        url: '/user/drawList',
+        method: 'post',
+        data
+    })
+}
+// 提现
 export const draw = data => {
-        return axios({
-            url: '/user/draw',
-            method: 'post',
-            data
-        })
-    }
-    // 充值
+    return axios({
+        url: '/user/draw',
+        method: 'post',
+        data
+    })
+}
+// 充值
 export const recharge = data => {
     return axios({
         url: '/user/recharge',
@@ -274,45 +308,201 @@ export const payPic = data => {
 }
 
 export const getBanner = data => {
-        return axios({
-            url: '/index/banner',
-            method: 'get',
-            data
-        })
-    }
-    // 获取好友返佣
+    return axios({
+        url: '/index/banner',
+        method: 'get',
+        data
+    })
+}
+// 获取好友返佣
 export const getFriends = data => {
-        return axios({
-            url: '/user/friendList',
-            method: 'post',
-            data
-        })
-    }
-    // 获取后台充值信息
+    return axios({
+        url: '/user/friendList',
+        method: 'post',
+        data
+    })
+}
+// 获取后台充值信息
 export const getReahargeInfo = data => {
-        return axios({
-            url: '/user/getRecharge',
-            method: 'get',
-            data
-        })
-    }
-    // 提交充值截图
+    return axios({
+        url: '/user/getRecharge',
+        method: 'get',
+        data
+    })
+}
+// 提交充值截图
 export const payRecharge = data => {
-        return axios({
-            url: '/user/payRecharge',
-            method: 'post',
-            data
-        })
-    }
-    // 获取好友返佣
+    return axios({
+        url: '/user/payRecharge',
+        method: 'post',
+        data
+    })
+}
+// 获取好友返佣
 export const getFriendOrder = data => {
-        return axios({
-            url: '/user/friendOrderList',
-            method: 'post',
-            data
-        })
-    }
-    // 默认全部倒出
+    return axios({
+        url: '/user/friendOrderList',
+        method: 'post',
+        data
+    })
+}
+// 获取主题颜色
+export const getcolor = data => {
+    return axios({
+        url: '/Common/coloron',
+        method: 'post',
+        data
+    })
+}
+
+// 兑换商品列表
+export const dhgoodsList = data => {
+    return axios({
+        url: '/Dhgoods/goodsList',
+        method: 'post',
+        data
+    })
+}
+// 兑换商品详情
+export const dhgoodsDetails = data => {
+    return axios({
+        url: '/Dhgoods/goodsDetail',
+        method: 'post',
+        data
+    })
+}
+// 佣金申请提现
+export const drawcredit3 = data => {
+    return axios({
+        url: '/user/drawcredit3',
+        method: 'post',
+        data
+    })
+}
+
+// 佣金提现列表
+export const credit3drawList = data => {
+    return axios({
+        url: '/user/credit3drawList',
+        method: 'post',
+        data
+    })
+}
+
+// 我的买入订单详情
+export const buyOrderInfo = data => {
+    return axios({
+        url: '/user/buyOrderInfo',
+        method: 'post',
+        data
+    })
+}
+
+// 我的卖出订单详情
+export const sellOrderInfo = data => {
+    return axios({
+        url: '/user/sellOrderInfo',
+        method: 'post',
+        data
+    })
+}
+
+// // 好友列表
+// export const friendList = data => {
+//     return axios({
+//         url: '/user/friendList',
+//         method: 'post',
+//         data
+//     })
+// }
+
+// 邀请推荐奖励列表
+export const tjFriendList = data => {
+    return axios({
+        url: '/user/friendList',
+        method: 'get',
+        data
+    })
+}
+
+// 邀请好友订单返佣列表
+// export const friendOrderList = data => {
+//     return axios({
+//         url: '/user/friendOrderList',
+//         method: 'get',
+//         data
+//     })
+// }
+
+// 购买会员卡成为会员
+export const payCard = data => {
+    return axios({
+        url: '/user/payCard',
+        method: 'post',
+        data
+    })
+}
+// 用户资金情况
+export const finance = data => {
+    return axios({
+        url: '/user/finance',
+        method: 'get',
+        data
+    })
+}
+// 订单置换元宝
+export const zhihuan = data => {
+    return axios({
+        url: '/user/zhihuan',
+        method: 'get',
+        data
+    })
+}
+// 银币兑换商品
+export const goodsCreateorder = data => {
+    return axios({
+        url: '/dhgoods/createorder',
+        method: 'get',
+        data
+    })
+}
+
+// 用户提货
+export const tihuo = data => {
+    return axios({
+        url: '/user/tihuo',
+        method: 'get',
+        data
+    })
+}
+// 入场券列表
+export const cardlist = data => {
+    return axios({
+        url: '/user/cardlist',
+        method: 'get',
+        data
+    })
+}
+
+// 分享佣金页面邀请好友数量 推荐奖励金额 推荐订单金额
+export const yjinfo = data => {
+    return axios({
+        url: '/user/yjinfo',
+        method: 'post',
+        data
+    })
+}
+// 判断用户设置收款码
+export const ckpayinfo = data => {
+    return axios({
+        url: '/index/ckpayinfo',
+        method: 'get',
+        data
+    })
+}
+
+
+// 默认全部倒出
 export default {
     //订单返佣
     getFriendOrder,
@@ -334,6 +524,8 @@ export default {
     register,
     // 登录
     login,
+    // 微信登陆
+    WXLogin,
     // 退出登录
     loginOut,
     // 获取验证码
@@ -385,5 +577,47 @@ export default {
     // 获取用户收款信息
     getUserPayInfo,
     // 上传付款截图
-    payPic
+    payPic,
+    // 微信支付
+    WXPay,
+    // 获取主题颜色
+    getcolor,
+    // 兑换商品
+    dhgoodsList,
+    // 兑换商品详情
+    dhgoodsDetails,
+    // 佣金申请提现
+    drawcredit3,
+    // 佣金提现列表
+    credit3drawList,
+    // 我的买入订单详情
+    buyOrderInfo,
+    // 我的卖出订单详情
+    sellOrderInfo,
+    // 好友列表
+    // friendList,
+    // 邀请推荐奖励列表
+    tjFriendList,
+    // 邀请好友订单返佣列表
+    // friendOrderList,
+    // 购买会员卡成为会员
+    payCard,
+    // 首页分类
+    classification,
+    // 用户资金情况
+    finance,
+    // 订单置换元宝
+    zhihuan,
+    // 银币兑换商品
+    goodsCreateorder,
+    // 用户提货
+    tihuo,
+    // 微信登陆测试
+    wxlogin2,
+    // 入场券列表
+    cardlist,
+// 分享佣金页面邀请好友数量 推荐奖励金额 推荐订单金额
+    yjinfo,
+    // 判断用户设置收款码
+    ckpayinfo,
 }

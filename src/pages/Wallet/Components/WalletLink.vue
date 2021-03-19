@@ -1,12 +1,23 @@
 <template>
   <div class="wallet-link clearfix">
-    <router-link to="/withdrawal" class="fl" @click="handleDraw" >提现</router-link>
+    <router-link
+      to="/withdrawal"
+      class="fl"
+      @click="handleDraw"
+      :style="'border: 1px solid ' + sysColor + ';'"
+      >提现</router-link
+    >
     <!-- <van-dialog v-model="drawShow" title="提现" show-cancel-button @confirm="sendDrawReq">
       <van-cell-group>
         <van-field v-model="drawMoney" type="digit" label="金额"/>
       </van-cell-group>
     </van-dialog> -->
-    <router-link to="/rechargetype" class="fr">充值</router-link>
+    <router-link
+      to="/rechargetype"
+      class="fr"
+      :style="'border: 1px solid ' + sysColor + ';'"
+      >充值</router-link
+    >
     <!-- <van-dialog v-model="show" title="充值" show-cancel-button @confirm="handleSaveRecharge">
       <van-cell-group>
         <van-field v-model="digit" type="digit" label="金额"/>
@@ -22,31 +33,37 @@
 
 <script>
 // import { Notify } from 'vant'
-import { Toast } from 'vant'
+import { Toast } from "vant";
 // import configObj from '@/http/config'
 export default {
-  name: 'WalletLink',
+  name: "WalletLink",
   props: {
     money: {
       type: String,
       default() {
-        return ''
-      }
-    }
+        return "";
+      },
+    },
   },
   data() {
     return {
       show: false,
-      digit: '',
-      drawMoney: '',
-      drawShow: false
+      digit: "",
+      drawMoney: "",
+      drawShow: false,
       // payUrl: ''
       // showCode: false
-    }
+      sysColor: localStorage.getItem("styleColor"),
+    };
+  },
+  created(){
+    setTimeout(function () {
+      this.sysColor = localStorage.getItem("styleColor");
+    }, 1000);
   },
   methods: {
     handleDraw() {
-      this.drawShow = true
+      this.drawShow = true;
     },
     // sendDrawReq() {
     //   if (this.drawMoney <= 0) {
@@ -63,27 +80,27 @@ export default {
     // },
     // 处理充值显示
     handleRechargeShow() {
-      this.show = true
+      this.show = true;
     },
     handleSaveRecharge() {
-      console.log(this)
+      console.log(this);
       if (parseInt(this.digit) <= 0 || this.digit.length <= 0) {
-        Toast('充值失败，您的金额有误，请重新输入')
-        return
+        Toast("充值失败，您的金额有误，请重新输入");
+        return;
       }
       // window.location.href = configObj.baseURL + '/user/recharge?monet=' + this.digit + '&TOKEN = ' + sessionStorage.getItem('TOKEN')
-      this.$api.recharge({ money: this.digit }).then(res => {
-        console.log(res)
+      this.$api.recharge({ money: this.digit }).then((res) => {
+        console.log(res);
         if (res.status === 1) {
           // this.payUrl = res.data.qrcode
           // this.showCode = true
-          window.location.href = res.data.url
+          window.location.href = res.data.url;
         }
-        Toast(res.msg)
-      })
-    }
-  }
-}
+        Toast(res.msg);
+      });
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -91,13 +108,13 @@ export default {
   margin: 0.4rem /* 30/75 */ 0;
   .fl,
   .fr {
-    border: 1px solid #FDB428;
-    border-radius: .1333rem /* 10/75 */;
+    border: 1px solid #fdb428;
+    border-radius: 0.1333rem /* 10/75 */;
     width: 4.4rem /* 330/75 */;
-    height: .9333rem /* 70/75 */;
-    line-height: .9333rem /* 70/75 */;
+    height: 0.9333rem /* 70/75 */;
+    line-height: 0.9333rem /* 70/75 */;
     text-align: center;
-    font-size: .4267rem /* 32/75 */;
+    font-size: 0.4267rem /* 32/75 */;
     color: #333;
     background-color: #fff;
   }

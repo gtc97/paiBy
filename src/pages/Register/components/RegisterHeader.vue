@@ -1,5 +1,5 @@
 <template>
-  <van-nav-bar class="register-Header" title="注册" />
+  <van-nav-bar class="register-Header" title="个人信息完善" />
 </template>
 
 <script>

@@ -4,6 +4,9 @@
     <HomeBanner :banner-list="bannerList"/>
     <HomeBroadcast/>
     <HomeAuction :goods-cat-list="goodsCatList"/>
+    <div>
+      
+    </div>
   </div>
 </template>
 <script>
@@ -23,14 +26,23 @@ export default {
   data() {
     return {
       goodsCatList: [],
-      bannerList: []
+      bannerList: [],
+      titShow: false,
     }
   },
   mounted() {
     this.getList()
     this.getBannerList()
+    this.getCkpayinfo()
   },
   methods: {
+    getCkpayinfo(){
+      this.$api.ckpayinfo().then((res) => {
+        if(res.data.msg == '未设置收款信息' && res.data.status == 1010){
+          this.titShow = true
+        }
+      })
+    },
     getBannerList() {
       this.$api.getBanner().then((res) => {
         this.bannerList = res.data
