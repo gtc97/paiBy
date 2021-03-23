@@ -27,7 +27,20 @@ export const constantRoutes = [{
         component: () =>
             import('@/pages/Dhgoods/goods')
     }]
-},
+    },
+
+    {
+        path: '/',
+        component: Layout,
+        redirect: '/dhgoodsdetails',
+        children: [{
+            path: 'dhgoodsdetails',
+            name: '兑换中心',
+            meta: { title: '兑换中心' },
+            component: () =>
+                import('@/pages/dhgoodsdetails/GoodsDetails')
+        }]
+    }, 
 {
     path: '/',
     component: Layout,
@@ -202,6 +215,13 @@ export const constantRoutes = [{
     component: () =>
         import('@/components/Agreement')
 },
+
+{//注册规则说明
+    path: '/zhuceAgreement',
+    name: 'zhuceAgreement',
+    component: () =>
+        import('@/components/zhuceAgreement')
+},
 {//我的卖单
     path: '/sellOrder',
     name: 'SellOrder',
@@ -267,7 +287,34 @@ export const constantRoutes = [{
         name: 'SilverGive',
         component: () =>
             import('@/pages/Silver/SilverGive')
+    },
+    {// 微信登陆
+        path: '/wxLogin',
+        name: 'wxLogin',
+        component: () =>
+            import('@/pages/wxLogin/wxLogin')
+    },
+
+    {// 规则指引
+        path: '/guize',
+        name: 'guize',
+        component: () =>
+            import('@/pages/guize/guize')
+    },
+
+    {// 积分兑换
+        path: '/convertIntegral',
+        name: 'convertIntegral',
+        component: () =>
+            import('@/pages/convertIntegral/convertIntegral')
+    },
+    {//  卖出订单详情
+        path: '/SellOrderDetails',
+        name: 'SellOrderDetails',
+        component: () =>
+            import('@/pages/SellOrder/SellOrderDetails')
     }
+
 
 
 

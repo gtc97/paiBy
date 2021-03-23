@@ -252,10 +252,8 @@ export default {
       const userId = JSON.parse(localStorage.getItem("USER")).userId;
 
       if (this.radio == 3) {
-        debugger;
         this.$api.WXPay({ userId: userId, fee: this.money, type: this.radio }).then((res) => {
             console.log(res);
-            debugger;
             Toast("支付凭证上传成功等待审核");
             this.$router.push({ path: "/wallet" });
         });

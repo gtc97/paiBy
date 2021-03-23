@@ -1,9 +1,11 @@
 <template>
-  <van-row class="goods-list" >
+  <van-row class="goods-list">
     <van-col v-for="item of goodsList" :key="item.id" span="12">
       <router-link :to="'/goodsdetails/' + item.id" class="item">
         <div class="item-img">
-          <span class="stock" :style="backColor(item.status)">{{ item.status }}</span>
+          <span class="stock" :style="'background:' + item.backColor">{{
+            item.status
+          }}</span>
           <img :src="item.goodsLogo" alt />
         </div>
         <div class="item-inner">
@@ -29,15 +31,28 @@ export default {
       },
     },
   },
-  data:{
-    return(){
-      
-    }
-  },computed:{
-    backColor(item){
-      return (item == '进行中'? 'background:#61AF4B':'' ) || (item == '已结束'? 'background:#DE4B4B':'' )
-    }
-  }
+  data() {
+    return {};
+  },
+  computed: {
+    backColor(item) {
+      var background = "background:'#C0C0C0'";
+      if (item == "进行中") {
+        background = "background:'#61AF4B'";
+      } else if (item == "已结束") {
+        background = "background:'#DE4B4B'";
+      }
+      console.log(background);
+      return { background };
+    },
+  },
+  methods: {
+    myCallback() {
+      this.pageNo = this.page;
+      this.records = result.data.total;
+      var data = { page: this.pageNo, rows: this.perPage };
+    },
+  },
 };
 </script>
 

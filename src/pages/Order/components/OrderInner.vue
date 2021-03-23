@@ -258,7 +258,6 @@ export default {
     },
     handlePay() {
       // console.log(this.payTypeList)
-      // debugger
       // if(this.payTypeList){
       //     this.$api.WXPay({ userId: this.$route.params.id, fee: 1 ,type: 3}).then(res => {
       //         console.log(res)

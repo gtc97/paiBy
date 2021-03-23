@@ -103,7 +103,7 @@ export default {
   methods: {
     navTO(item) {
       // this.$router.push('/FileDetail')
-      this.$router.push({ name: "OrderDetails", params: { id: item.id } });
+      this.$router.push({ name: "SellOrderDetails", params: { id: item.id } });
     },
     // 处理卖出
     handleSellOrder(id) {

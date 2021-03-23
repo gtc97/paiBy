@@ -500,6 +500,22 @@ export const ckpayinfo = data => {
         data
     })
 }
+// 个人中心调取头像会员等级等
+export const userinfo = data => {
+    return axios({
+        url: '/user/userinfo',
+        method: 'get',
+        data
+    })
+}
+// 积分兑换
+export const convert = data => {
+    return axios({
+        url: '/user/convert',
+        method: 'post',
+        data
+    })
+}
 
 
 // 默认全部倒出
@@ -616,8 +632,12 @@ export default {
     wxlogin2,
     // 入场券列表
     cardlist,
-// 分享佣金页面邀请好友数量 推荐奖励金额 推荐订单金额
+    // 分享佣金页面邀请好友数量 推荐奖励金额 推荐订单金额
     yjinfo,
     // 判断用户设置收款码
     ckpayinfo,
+    // 个人中心调取头像会员等级等
+    userinfo,
+    // 积分兑换
+    convert,
 }

@@ -2,11 +2,7 @@
   <div class="container">
     <van-nav-bar class="login-header" title="登录" />
     <div class="logo" />
-    <img
-      src="/static/logo.jpg"
-      style="width: 40%; margin-left: 30%"
-      alt=""
-    />
+    <img src="/static/logo.jpg" style="width: 40%; margin-left: 30%" alt="" />
     <div class="login-wrap">
       <div class="title">
         <div class="title-l fl">国家/地区</div>
@@ -37,7 +33,7 @@
       <div class="agreement">
         <van-checkbox v-model="agreement" :checked-color="sysColor">
           <span>阅读并同意</span>
-          <router-link to="/agreement" :style="'color:' + sysColor"
+          <router-link to="/zhuceAgreement" :style="'color:' + sysColor"
             >《用户注册协议》</router-link
           >
         </van-checkbox>
@@ -89,8 +85,8 @@ export default {
     // var isWXlogin = localStorage.getItem("WXlogin")
     // if(isWXlogin == null){
     //   localStorage.setItem("WXlogin",'微信授权')
-    //   // var url = configObj.baseURL + "/login/wxlogin"
-    //   var url = configObj.baseURL + "/login/wxlogin2"
+    //   var url = configObj.baseURL + "/login/wxlogin"
+    //   // var url = configObj.baseURL + "/login/wxlogin2"
     //   location.href = url
     // }
 
@@ -100,7 +96,13 @@ export default {
   },
   methods: {
     wxLogin() {
-      const params = {appid:'wx1f648303799a12ba',redirect_uri: 'http://pmapi.chaoyuephp.com',response_type: 'code',scope: 'snsapi_userinfo',state: 'wx1f648303799a12ba'};
+      const params = {
+        appid: "wx1f648303799a12ba",
+        redirect_uri: "http://pmapi.chaoyuephp.com",
+        response_type: "code",
+        scope: "snsapi_userinfo",
+        state: "wx1f648303799a12ba",
+      };
       // const params = {appid:'wx1f648303799a12ba',redirect_uri: 'http://192.168.1.7:8080',response_type: 'code',scope: 'snsapi_userinfo',state: 'wx1f648303799a12ba'};
       const config = {
         headers: {
@@ -108,7 +110,9 @@ export default {
           "Content-Type": "multipart/X-WWW-FORM-URLENCODED",
         },
       };
-      axios.get(configObj.baseURL + "/login/wxlogin", params, config).then((res) => {
+      axios
+        .get(configObj.baseURL + "/login/wxlogin", params, config)
+        .then((res) => {
           console.log(res);
           const userInfo = {
             userId: res.data.userId,
@@ -150,7 +154,12 @@ export default {
           localStorage.setItem("USER", JSON.stringify(userInfo));
           localStorage.setItem("TOKEN", res.data.token);
           localStorage.setItem("IDS", 1);
-          this.$router.push({ path: "/" });
+
+          if (res.data.is_bind == 0) {
+            this.$router.push({ path: "/register" });
+          } else {
+            this.$router.push({ path: "/" })
+          }
         } else {
           Toast(res.msg);
         }

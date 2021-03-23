@@ -62,7 +62,8 @@ export default {
     // 获取地址列表
     getAddressList() {
       this.$api.addressList().then(res => {
-        this.addressList = res.data
+        debugger
+        this.addressList = res.data.data
         console.log(res)
       })
     },

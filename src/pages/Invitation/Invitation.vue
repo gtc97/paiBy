@@ -4,8 +4,8 @@
     <div class="qr-code-wrap tc">
       <!-- <div class="invite-title">邀请码</div> -->
       <div>
-        <p class="invite-code"></p>
-        <!-- {{ inviteCode }} -->
+        <p class="invite-code">{{ inviteCode }}</p>
+        
         <div id="qrcode" class="qr-code"></div>
       </div>
       <!-- <p class="tips">扫码关注加入我们</p> -->
@@ -20,12 +20,13 @@ export default {
   components: { QRCode },
   data() {
     return {
-      inviteCode: JSON.parse(localStorage.getItem("USER")).inviteCode,
+      // inviteCode: JSON.parse(localStorage.getItem("USER")).inviteCode,
+      inviteCode: JSON.parse(localStorage.getItem("userInfo")).inviteCode,
       link:
         window.location.protocol +
         "//" +
         window.location.host +
-        "/#/register?invite=",
+        "?invite=",
     };
   },
   mounted() {

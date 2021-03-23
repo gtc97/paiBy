@@ -2,6 +2,24 @@
   <div class="tool">
     <div class="tool-list-item">
       <div class="flex">
+        
+        <div class="content">
+          <router-link to="/pay">
+            <div style="display: grid">
+              <img src="../../../../static/buy_icon.png" alt="" />
+              <div class="text">买单</div>
+            </div>
+          </router-link>
+        </div>
+        
+        <div class="content">
+          <router-link to="/sellOrder">
+            <div style="display: grid">
+              <img src="../../../../static/sell_bill_icon.png" alt="" />
+              <div class="text">卖单</div>
+            </div>
+          </router-link>
+        </div>
         <div class="content">
           <router-link to="/invitation">
             <div style="display: grid">
@@ -19,7 +37,7 @@
           </router-link>
         </div>
         <div class="content">
-          <router-link to="/rewards">
+          <router-link to="/rewardsNew">
             <div style="display: grid">
               <img src="../../../../static/share_gift_icon.png" alt="" />
               <div class="text">分享奖励</div>
@@ -42,11 +60,27 @@
             </div>
           </router-link>
         </div>
-        <div class="content">
+        <!-- <div class="content">
           <router-link to="/signing">
             <div style="display: grid">
               <img src="../../../../static/signing_icon.png" alt="" />
               <div class="text">我的签约</div>
+            </div>
+          </router-link>
+        </div> -->
+        <div class="content">
+          <router-link to="/guize">
+            <div style="display: grid">
+              <img src="../../../../static/buy_icon.png" alt="" />
+              <div class="text">规则指引</div>
+            </div>
+          </router-link>
+        </div>
+        <div class="content">
+          <router-link to="/dingdan">
+            <div style="display: grid">
+              <img src="../../../../static/buy_icon.png" alt="" />
+              <div class="text">实物订单</div>
             </div>
           </router-link>
         </div>

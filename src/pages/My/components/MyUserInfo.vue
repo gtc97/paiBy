@@ -5,7 +5,13 @@
         <img src="../../../../static/avatar.jpg" alt="头像" />
       </div>
       <div class="info">
-        <div class="username">{{ userInfo.userName }}</div>
+        <div class="username">
+          {{ userInfo.userName || '游客'}}
+          <span style="font-size: 0.4rem; margin-left: 0.8rem">
+            <img style="height:0.5rem; width: 0.4rem;" src="../../../../static/location_icon1.png" alt="" />
+            <span>{{ userInfo.vipName }}</span>
+          </span>
+        </div>
         <div class="phone-num">{{ userInfo.userPhone }}</div>
       </div>
       <div class="is-attestation">已实名</div>
@@ -51,11 +57,26 @@ export default {
       money: {},
     };
   },
-  created() {},
+  created() {
+    this.getUserInfo();
+  },
   mounted() {
     this.getUserMoney();
   },
   methods: {
+    getUserInfo() {
+      this.$api.userinfo().then((res) => {
+        console.log(res);
+        if (res.status == 1) {
+          this.userInfo = res.data;
+          if (res.data.vip == 0) {
+            this.userInfo.vipName = "体验会员";
+          }
+        } else {
+          this.userInfo = {userName:'游客',vipName:'用户',userPhone:''}
+        }
+      });
+    },
     getUserMoney() {
       this.$api.finance().then((res) => {
         if (res.status != 1) {
@@ -112,6 +133,7 @@ export default {
   background-color: #fff;
   padding: 0.4rem /* 50/75 */ 0.4rem /* 30/75 */ 0.2667rem /* 20/75 */;
   height: 1.6rem /* 120/75 */;
+  margin-bottom: 0.4rem;
 }
 .money {
   border-radius: 0.33333rem;

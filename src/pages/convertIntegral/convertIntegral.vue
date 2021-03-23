@@ -1,42 +1,25 @@
 <template>
   <div class="register-inner">
-    <common-header title="银元转赠" :bg="sysColor" style="color: #fff" />
+    <common-header title="积分兑换" bg="#fff" style="color: #fff" />
 
     <div class="inner-wrap">
       <van-cell-group>
-        <div class="input-label">手机号</div>
-        <van-field
-          v-model="user.userPhone"
-          :rules="[{ required: true, message: '请填写手机号' }]"
-          placeholder="请输入手机号"
-        />
+        <div class="input-label">积分转换</div>
+        <van-field v-model="money" placeholder="请输入" />
       </van-cell-group>
-      <van-cell-group>
-        <div class="input-label">验证码</div>
-        <van-field
-          v-model="user.code"
-          :rules="[{ required: true, message: '请填写验证码' }]"
-          placeholder="请输入短信验证码"
-        >
-          <template #button>
-            <span @click="handleGetVerificationCode">{{ user.notice }}</span>
-          </template>
-        </van-field>
-      </van-cell-group>
-      <van-cell-group>
-        <div class="input-label">数量</div>
-        <van-field v-model="user.inviteCode" placeholder="请输入数量" />
-      </van-cell-group>
-      <van-cell-group>
-        <div class="input-label">姓名</div>
-        <van-field
-          v-model="user.userName"
-          :rules="[{ required: true, message: '请填写姓名' }]"
-          placeholder="请输入真实姓名"
-        />
-      </van-cell-group>
-
-      <div class="submit-btn" @click="handleSubmitRegister" :style="'background:'+ sysColor">提交</div>
+      <!-- <div class="money">
+        当前可用积分 <span class="red">{{ changeMoney }}</span>
+      </div>
+      <div class="money" style="margin-bottom: 0.4rem">
+        当前可转换业绩 <span class="red">{{ change }}</span>
+      </div> -->
+      <div
+        class="submit-btn"
+        @click="handleSubmitRegister"
+        :style="'background:' + sysColor"
+      >
+        确认转换
+      </div>
     </div>
   </div>
 </template>
@@ -49,28 +32,29 @@ export default {
   data() {
     return {
       user: {
-        avatar: [],
-        userName: "",
         cardID: "",
         userPhone: "",
         code: "",
-        inviteCode:this.$route.query.invite === 1 ? "" : this.$route.query.invite,
+        inviteCode:
+          this.$route.query.invite === 1 ? "" : this.$route.query.invite,
         notice: "获取验证码",
         overtime: true,
       },
-      sysColor: '#FDB428',
+      change: "0",
+      changeMoney: "0.00",
+      sysColor: "#FDB428",
       agreement: false,
     };
   },
-  created(){
-      this.sysColor = localStorage.getItem('styleColor')
+  created() {
+    this.sysColor = localStorage.getItem("styleColor");
   },
   methods: {
     // 处理提交转增
     handleSubmitRegister() {
-      this.$api.register(this.user).then((res) => {
+      this.$api.convert({'jifen':this.money}).then((res) => {
         if (res.status === 1) {
-            console.log(res.data.msg)
+          console.log(res.data.msg);
         } else {
           Toast(res.msg);
         }
@@ -171,6 +155,14 @@ export default {
       }
     }
   }
+}
+.money {
+  font-size: 0.35rem;
+  color: #c0c0c0;
+  margin-top: 0.3rem;
+}
+.red {
+  color: #bf246c;
 }
 </style>
 

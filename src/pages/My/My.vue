@@ -2,7 +2,7 @@
   <div class="container">
     <MyHeader />
     <MyUserInfo />
-    <MyCard />
+    <!-- <MyCard /> -->
     <MyToolList />
   </div>
 </template>

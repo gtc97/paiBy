@@ -70,7 +70,8 @@ export default {
       });
     },
     buy(num) {
-      var userId = JSON.parse(localStorage.getItem("USER")).userId;
+      // var userId = JSON.parse(localStorage.getItem("USER")).userId;
+      var userId = JSON.parse(localStorage.getItem("userInfo")).userId;
       // if (num == 1) {
       //   card_id = 3;
       // } else {

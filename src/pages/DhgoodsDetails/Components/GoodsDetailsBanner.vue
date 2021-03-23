@@ -39,7 +39,7 @@ export default {
             font-size: 20px;
             line-height: 150px;
             text-align: center;
-            background-color: #39a9ed;
+            // background-color: #39a9ed;
             img {
                 width: 100%;
                 height: 100%;

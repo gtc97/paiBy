@@ -13,5 +13,9 @@ export function checkIdCard(name) {
 
 // 邀请码
 export function inviteCodeLimit(name) {
-    return /^[a-z0-9]{5,5}$/.test(name)
+    if (name != '' && name != undefined){
+        return /^[a-z0-9]{5,5}$/.test(name)
+    } else {
+        return true
+    }
 }

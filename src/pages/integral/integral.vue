@@ -7,6 +7,7 @@
       <div class="content">
         <div class="money">
           <div class="moneyTit">{{money}}</div>
+          <!-- <div class="text">当前可用{{ integral }}</div> -->
         </div>
         <div class="textIn">
           <span>
@@ -17,7 +18,7 @@
       <!-- <span class="right"><router-link to="/rakeback" style="color:#fff">明细</router-link></span> -->
     </div>
     <div class="second">
-        <button :style="'background:' + sysColor"><router-link to="" style="color:#fff">兑换</router-link></button>
+        <button :style="'background:' + sysColor"><router-link to="/convertIntegral" style="color:#fff">兑换</router-link></button>
     </div>
   </div>
 </template>
@@ -31,10 +32,12 @@ export default {
       rewardInfo: {},
       sysColor: '#F0721E',
       money:'0.00',
+      integral:'0.00',
     };
   },
   created(){
     this.getList()
+    this.getUserInfo()
   },
   methods: {
     getList(){
@@ -43,6 +46,11 @@ export default {
         this.dataList = res.data
         Toast(res.msg);
       });
+    },
+    getUserInfo(){
+      this.$api.finance().then((res) => {
+        this.money = res.data.credit2
+      })
     },
   },
 };

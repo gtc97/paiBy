@@ -1,12 +1,12 @@
 <template>
   <div class="register-inner">
-    <div class="avatar">
+    <!-- <div class="avatar">
       <van-uploader v-model="user.vatar " :max-count="1" />
-      <!-- <van-cell-group class="username">
+      <van-cell-group class="username">
         <van-field v-model="user.name" placeholder="请输入用户名" />
-      </van-cell-group> -->
+      </van-cell-group>
       <div class="username">头像</div>
-    </div>
+    </div> -->
     <div class="inner-wrap">
       <van-cell-group>
         <div class="input-label">姓名</div>
@@ -52,7 +52,6 @@ export default {
   data() {
     return {
       user: {
-        avatar: [],
         userName: '',
         cardID: '',
         userPhone: '',
@@ -67,27 +66,27 @@ export default {
   methods: {
     // 处理提交注册
     handleSubmitRegister() {
-      if (!checkName(this.user.userName)) {
+      var that = this
+      if (!checkName(that.user.userName)) {
         Toast('您输入的用户名有误，请重新输入')
         return
-      } else if (!checkIdCard(this.user.cardID)) {
+      } else if (!checkIdCard(that.user.cardID)) {
         Toast('您输入的身份证号有误，请重新输入')
         return
-      } else if (!checkPhone(this.user.userPhone)) {
+      } else if (!checkPhone(that.user.userPhone)) {
         Toast('您输入的手机号有误，请重新输入')
         return
-      }else if(!inviteCodeLimit(this.user.inviteCode)){
+      }else if(!inviteCodeLimit(that.user.inviteCode)){
         Toast('您输入的邀请码有误，请重新输入')
         return
-      } else if (this.user.code.length <= 5) {
+      } else if (that.user.code.length <= 5) {
         Toast('您输入的验证码有误，请重新输入')
         return
-      } else if (!this.agreement) {
+      } else if (!that.agreement) {
         Toast('请同意用户注册协议')
         return
       }
-
-      this.$api.register(this.user).then(res => {
+      that.$api.register(that.user).then(res => {
         if (res.status === 1) {
           const userInfo = {
             userId: res.data.userId,
@@ -99,6 +98,8 @@ export default {
           localStorage.setItem('USER', JSON.stringify(userInfo))
           localStorage.setItem('TOKEN', res.data.token)
           localStorage.setItem('IDS', 1)
+          // url = url.substring(0, url.indexOf('?'))
+          // location.href = url
           this.$router.push({ path: '/' })
         } else {
           Toast(res.msg)

@@ -43,14 +43,14 @@
         <div class="itemRight"><span><router-link to="/rakeback">奖金明细>></router-link></span></div>
         <div style="clear: both;"></div>
       </div>
-      <div class="item">
+      <!-- <div class="item">
         <div class="itemLeft">
           <span>团队业绩</span>
           <span style="color:#DF4C4C;font-size:0.5rem;">￥{{'0'}}</span>
         </div>
         <div class="itemRight"><span><router-link to="/rakeback">业绩明细>></router-link></span></div>
         <div style="clear: both;"></div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

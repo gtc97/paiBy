@@ -7,17 +7,18 @@ router.beforeEach((to, from, next) => {
   const ids = localStorage.getItem('IDS')
   const user = localStorage.getItem('USER')
   const token = localStorage.getItem('TOKEN')
-  const whiteList = ['/login', '/register', '/agreement']
+  const whiteList = ['/login', '/register', '/agreement', '/home']
 
-  if (user && token && ids) {
+  if ( token ) {
     next()
   } else {
     // 清理本地缓存
-    localStorage.clear()
+    // localStorage.clear()
+    // localStorage.removeItem('TOKEN')
     if (whiteList.indexOf(to.path) !== -1) {
       next()
     } else {
-      next(`/login?redirect=${to.path}`)
+      next('/?redirect=${to.path}')
       NProgress.done()
     }
   }

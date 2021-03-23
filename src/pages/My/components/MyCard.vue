@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <van-grid :border="false" class="card-info">
+    <!-- <van-grid :border="false" class="card-info">
       <van-grid-item to="/pay" class="buy_icon" icon="../../../../static/buy_icon.png" text="买单" />
       <van-grid-item
         to="/sellOrder"
@@ -15,7 +15,12 @@
         icon="./../../../static/wallet_icon.png"
         text="钱包"
       />
-    </van-grid>
+    </van-grid> -->
+    <div class="card" style="height:auto;">
+      <div style="font-size: 0.4rem;">
+        id:<span>{{ inviteCode }}</span>
+      </div>
+    </div>
   </div>
 </template>
 

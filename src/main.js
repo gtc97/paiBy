@@ -37,6 +37,9 @@ Vue.config.productionTip = false
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
+// 分页
+// import Pagination from 'vue-pagination';
+// Vue.component(Pagination);
 
 /* eslint-disable no-new */
 new Vue({
