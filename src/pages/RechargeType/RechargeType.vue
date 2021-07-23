@@ -10,7 +10,7 @@
                  <div class="title">在线支付</div>
                  <van-radio class="icon-right" name="1" checked-color="#FDB428" />
                 </div>-->
-        <div class="pay-type-item">
+        <!-- <div class="pay-type-item">
           <div class="icon-left icon2" />
           <div class="title">线下汇款</div>
           <van-radio class="icon-right" name="1" checked-color="#FDB428" />
@@ -24,6 +24,11 @@
           <div class="icon-left icon4" />
           <div class="title">微信转账</div>
           <van-radio class="icon-right" name="3" checked-color="#FDB428" />
+        </div> -->
+        <div class="pay-type-item">
+          <div class="icon-left icon4" />
+          <div class="title">微信支付</div>
+          <van-radio class="icon-right" name="4" checked-color="#FDB428" />
         </div>
       </van-radio-group>
 
@@ -85,10 +90,10 @@
             ></i>
           </li>
           <li>
-            支付姓名：{{ userPayInfo.alipay.phone }}
+            支付姓名：{{ userPayInfo.alipay.userName }}
             <i
               class="el-icon-document-copy"
-              @click="copyUrl(userPayInfo.alipay.phone)"
+              @click="copyUrl(userPayInfo.alipay.userName)"
             ></i>
           </li>
           <li>
@@ -107,10 +112,10 @@
             ></i>
           </li>
           <li>
-            支付姓名：{{ userPayInfo.weixin.phone }}
+            支付姓名：{{ userPayInfo.weixin.userName }}
             <i
               class="el-icon-document-copy"
-              @click="copyUrl(userPayInfo.weixin.phone)"
+              @click="copyUrl(userPayInfo.weixin.userName)"
             ></i>
           </li>
           <li>
@@ -122,8 +127,8 @@
           </li>
         </ul>
       </div>
-      <div class="input-title">上传付款凭证：</div>
-      <ul style="font-size: 0.4em; line-height: 2em; padding-top: 1em">
+      <!-- <div v-if=" radio !== 4" class="input-title">上传付款凭证：</div>
+      <ul v-if=" radio !== 4" style="font-size: 0.4em; line-height: 2em; padding-top: 1em">
         <div class="ercode" style="margin: auto; width: 6.2em">
           <van-uploader
             v-model="fileList"
@@ -132,14 +137,20 @@
             multiple
           />
         </div>
-      </ul>
+      </ul> -->
 
       <div class="input-title">
         填写金额
-        <small>（请如实填写您的转账金额）</small>
+        <!-- <small v-if="radio !== 4">（请如实填写您的转账金额）</small> -->
       </div>
       <input v-model="money" type="text" class="money-input" placeholder="￥" />
-      <div class="submit-btn" @click="handlePay" :style="'background:'+ sysColor +';'">立即充值</div>
+      <div
+        class="submit-btn"
+        @click="payMoney"
+        :style="'background:' + sysColor + ';color: #fff'"
+      >
+        立即充值
+      </div>
     </div>
   </div>
 </template>
@@ -147,18 +158,22 @@
 <script>
 import { Toast } from "vant";
 import axios from "axios";
+import wx from "weixin-js-sdk";
 
 export default {
   name: "RechargeType",
   data() {
     return {
-      radio: 1,
+      radio: '4',
       payImgUrl: "",
       fileList: [],
       userPayInfo: {
         unionpay: {},
         alipay: {},
-        weixin: {},
+        weixin: {
+          // payAccount:'gtc',
+          // phone
+        },
       },
       money: "",
       payType: [
@@ -181,7 +196,7 @@ export default {
           img: "",
         },
       ],
-      sysColor:localStorage.getItem('styleColor'),
+      sysColor: localStorage.getItem("styleColor"),
     };
   },
   watch: {
@@ -238,7 +253,24 @@ export default {
         this.userPayInfo = res.data;
       });
     },
-    handlePay() {
+    payMoney(){
+      this.$api
+          .recharge({
+            money: this.money,
+            type: this.radio,
+            img: this.payImgUrl,
+          })
+          .then((res) => {
+            // if(this.radio !== 4){
+            //   Toast("支付凭证上传成功等待审核");
+            //   this.$router.push({ path: "/wallet" });
+            // }else{
+              this.handlePay(res.data.orderSn)
+            // }
+          });
+    },
+    handlePay(orderSn) {
+      var that = this;
       var data = new Date();
       var hour = data.getHours();
       // if (hour < 9 || hour > 19) {
@@ -246,23 +278,95 @@ export default {
       //     return;
       // }
       if (parseInt(this.money) <= 0 || this.money.length <= 0) {
-        Toast("充值失败，您的金额有误，请重新输入");
+        Toast("充值失败，请输入整数金额！");
         return;
       }
-      const userId = JSON.parse(localStorage.getItem("USER")).userId;
-
-      if (this.radio == 3) {
-        this.$api.WXPay({ userId: userId, fee: this.money, type: this.radio }).then((res) => {
+      var userId = JSON.parse(localStorage.getItem("userInfo")); //'100342' //
+      if(JSON.parse(localStorage.getItem("userInfo")) !== undefined && JSON.parse(localStorage.getItem("userInfo")) !== null){
+        userId = JSON.parse(localStorage.getItem("userInfo")).userId
+      }else{
+        userId = JSON.parse(localStorage.getItem("USER")).userId
+      }
+      if (this.radio == 4) {
+        this.$api
+          .WXPay({ userId: userId, fee: this.money, type: 3,orderSn: orderSn })
+          .then((res) => {
+            // appId: "wx1f648303799a12ba"
+            // nonceStr: "rmmllrg1s71agw32h3oegp01j18b20wn"
+            // package: "prepay_id=wx232218448843190359bc6ffb3190870000"
+            // paySign: "1F49B9448E9DAB029472B52ECD67AF1E"
+            // signType: "MD5"
+            // timeStamp: "1616509124"
+            // timestamp: "1616509124"
             console.log(res);
-            Toast("支付凭证上传成功等待审核");
-            this.$router.push({ path: "/wallet" });
-        });
-      } else {
-        this.$api.recharge({money: this.money,type: this.radio,img: this.payImgUrl, }).then((res) => {
-            Toast("支付凭证上传成功等待审核");
-            this.$router.push({ path: "/wallet" });
+            if (res.status == 1) {
+              console.log(typeof res.data);
+              // var data = JSON.parse(Decrypt(res.data));//将解密后的字符串转为对象
+              wx.config({
+                debug: false,
+                appId: res.data.appId,
+                timestamp: res.data.timestamp,
+                nonceStr: res.data.noncestr,
+                signature: res.data.signature,
+                jsApiList: ['chooseWXPay']
+              })
+              wx.ready(ress => {
+                wx.checkJsApi({
+                  jsApiList: ['chooseWXPay'],
+                  success: resa => {
+                    console.log('checked api:', resa)
+                  },
+                  fail: err => {
+                    console.log('check api fail:', err)
+                  }
+                })
+              })
+              that.wxPay(res)
+              // Toast("支付凭证上传成功等待审核");
+            } else {
+              Toast(res.msg);
+            }
           });
       }
+      //  else {
+      //   this.$api
+      //     .recharge({
+      //       money: this.money,
+      //       type: this.radio,
+      //       img: this.payImgUrl,
+      //     })
+      //     .then((res) => {
+      //       Toast("支付凭证上传成功等待审核");
+      //       this.$router.push({ path: "/wallet" });
+      //     });
+      // }
+    },
+    wxPay(res){
+      var that = this
+      wx.chooseWXPay({
+        // appId: res.data.appId,
+        timestamp: res.data.timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+        nonceStr: res.data.nonceStr, // 支付签名随机串，不长于 32 位
+        package: res.data.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+        signType: res.data.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+        paySign: res.data.paySign, // 支付签名
+        success: function (ress) {
+          console.log(ress);
+          Toast("支付成功");
+          // 支付成功后的回调函数
+          that.$router.push({ path: "/my" });
+        },
+        cancel: function (cancel) {
+          //提示引用的是mint-UI里toast
+          console.log(cancel)
+          Toast("已取消支付");
+          that.$router.push({ path: "/my" });
+        },
+        fail: function (fail) {
+          console.log(fail)
+          Toast('支付失败');
+        },
+      });
     },
   },
 };

@@ -21,6 +21,15 @@ export default {
       areaList
     }
   },
+  created(){
+  },
+  // beforeRouteLeave(to, from, next){
+  //   if(to.name == ""){
+  //     this.$router.push({name:"index"});
+  //   }else{
+  //     next();
+  //   }
+  // },
   methods: {
     onSave(content) {
       // 根据值找key
@@ -43,7 +52,7 @@ export default {
           return
         }
         Toast(res.msg)
-        this.$router.push({ path: '/address' })
+        this.$router.push({ path: '/my' })
       })
     }
   }

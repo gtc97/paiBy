@@ -10,7 +10,7 @@
       <div class="foot">
         <div
           class="purchase-btn"
-          :style="'background:' + sysColor + ';'"
+          :style="'background:' + sysColor + ';color: #fff'"
           @click="handleCreateOrder"
         >
           点击下单
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { Toast } from "vant";
+import { Dialog,Toast } from "vant";
 
 export default {
   name: "GoodsDetailsInfo",
@@ -55,6 +55,14 @@ export default {
             this.$router.push({ path: "/pay?active=wait" });
           } else {
             Toast(res.msg);
+            if(res.status == 1010 && res.msg == '请先设置收货地址'){
+              Dialog.confirm({
+              title: "收货地址未设置",
+                message: "请先设置收货地址",
+              }).then(() => {
+                this.$router.push({ path: "/address" });
+              });
+            }
           }
         });
     },

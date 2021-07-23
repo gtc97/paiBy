@@ -16,37 +16,59 @@
       <div class="auction-content">
         <div v-for="(v, k) in goodsCatList" :key="k" class="auction-start">
           <!-- <div class="auction-header-time">{{ v.onlineTime }}</div> -->
-          <div v-if="v.statusName == '交易中'">
+
+          <div class="classStyle" v-if="v.statusName == '交易中'">
+            <!-- <div class="style" style="background-color: #eb4343;">{{ v.statusName }}</div> -->
             <router-link
               :to="{
                 path: '/goods',
                 query: { type: v.catId, title: v.catName },
               }"
-              class="auction-start-item current-start"
+              class="auction-start-item "
+              :class=" v.tiqian == 1 ?'current-qiang' : 'current-start'"
             >
               <img :src="v.catLogo" width="100%" alt="2" />
               <div class="time">
                 <div class="time-style">{{ v.onlineTime }}</div>
               </div>
-              <div class="title">{{ v.catName }}</div>
+              <!-- <div class="title">{{ v.catName }}</div> -->
             </router-link>
           </div>
-          <div v-if="v.statusName == '已结束'">
+          <div class="classStyle" v-if="v.statusName == '已结束'">
+            <!-- <div class="style" style="background-color: #C0C0C0;">{{ v.statusName }}</div> -->
             <router-link
               :to="{
                 path: '/goods',
                 query: { type: v.catId, title: v.catName },
               }"
-              class="auction-start-item current-end"
+              class="auction-start-item"
+              :class=" v.tiqian == 1 ?'current-qiang' : 'current-end'"
             >
               <img :src="v.catLogo" width="100%" alt="2" />
               <div class="time">
                 <div class="time-style">{{ v.onlineTime }}</div>
               </div>
-              <div class="title">{{ v.catName }}</div>
+              <!-- <div class="title">{{ v.catName }}</div> -->
             </router-link>
           </div>
-          <div v-if="v.statusName == '未开始'">
+          <div class="classStyle" v-if="v.statusName == '未开始'">
+            <!-- <div class="style" style="background-color: #C0C0C0;">{{ v.statusName }}</div> -->
+            <router-link
+              :to="{
+                path: '/goods',
+                query: { type: v.catId, title: v.catName },
+              }"
+              class="auction-start-item"
+              :class=" v.tiqian == 1 ?'current-qiang' : 'current-ready'"
+            >
+              <img :src="v.catLogo" width="100%" alt="2" />
+              <div class="time">
+                <div class="time-style">{{ v.onlineTime }}</div>
+              </div>
+              <!-- <div class="title">{{ v.catName }}</div> -->
+            </router-link>
+          </div>
+          <!-- <div v-if="v.statusName == '未开始'">
             <router-link
               :to="{
                 path: '/goods',
@@ -58,9 +80,8 @@
               <div class="time">
                 <div class="time-style">{{ v.onlineTime }}</div>
               </div>
-              <div class="title">{{ v.catName }}</div>
             </router-link>
-          </div>
+          </div> -->
         </div>
       </div>
       <!-- </div  -->
@@ -79,15 +100,27 @@ export default {
       },
     },
   },
-   data() {
+  data() {
     return {
-      sysColor: localStorage.getItem('styleColor'),
+      sysColor: localStorage.getItem("styleColor"),
     };
   },
 };
 </script>
 
 <style lang="less" scoped>
+.classStyle {
+  position: relative;
+}
+.style {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 99;
+  font-size: 0.32rem;
+
+  border-radius: 0 0 0 0.2667rem;
+}
 .auction {
   position: relative;
 
@@ -143,20 +176,26 @@ export default {
     .current-start {
       &::after {
         content: "进行中";
-        background-color: #6cc253;
+        background-color: #eb4343; //#6cc253;
       }
     }
 
     .current-end {
       &::after {
         content: "已结束";
-        background-color: #eb4343;
+        background-color: #c0c0c0; //#eb4343;
       }
     }
     .current-ready {
       &::after {
         content: "未开始";
-        background-color: #eb4343;
+        background-color: #c0c0c0;
+      }
+    }
+    .current-qiang {
+      &::after {
+        content: "可抢拍";
+        background-color: #1ac252;
       }
     }
     .current-ready,
@@ -183,7 +222,7 @@ export default {
       background-color: #fff;
       img {
         border-radius: 0.266rem;
-        height: 4.8rem;
+        // height: 4.8rem;
       }
       .auction-start-item {
         position: relative;
@@ -201,7 +240,7 @@ export default {
           position: absolute;
           clear: both;
           width: 100%;
-          top: 55%;
+          top: 57%;
           text-align: center;
           //   margin-top: 20%;
           //   margin: 0 auto;
@@ -210,7 +249,7 @@ export default {
           font-size: 0.5em;
         }
         .time-style {
-          background: #c0c0c0;
+          background: #10101096;
           width: 65%;
           margin: 0 auto;
           border-radius: 0.8em;

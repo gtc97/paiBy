@@ -20,12 +20,17 @@ export default {
       goodDetails: {}
     }
   },
-  mounted() {
+  created() {
     this.getGoodsDetails(this.$route.params.id)
   },
   methods: {
     getGoodsDetails(id) {
       this.$api.goodsDetails({ id }).then(res => {
+        if (res.status != 1) {
+          Toast(res.msg);
+          this.$router.go(-1)
+          return;
+        }
         this.goodDetails = res.data
         console.log(res)
       })

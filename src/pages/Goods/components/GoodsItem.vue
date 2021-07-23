@@ -1,12 +1,14 @@
 <template>
   <van-row class="goods-list">
     <van-col v-for="item of goodsList" :key="item.id" span="12">
-      <router-link :to="'/goodsdetails/' + item.id" class="item">
+      <!-- <router-link :to="'/goodsdetails/' + item.id" class="item"> -->
+      <div class="item" @click="navTo(item)">
         <div class="item-img">
           <span class="stock" :style="'background:' + item.backColor">{{
-            item.status
+            item.tiqian == 1 ? '可抢拍' : item.status
           }}</span>
-          <img :src="item.goodsLogo" alt />
+          <!-- <img :src="item.goodsLogo" alt /> -->
+          <van-image :src="item.goodsLogo" fit="cover" />
         </div>
         <div class="item-inner">
           <div class="title">{{ item.goodsName }}</div>
@@ -14,13 +16,16 @@
             <i class="price">￥{{ item.goodsPrice }}</i>
           </div>
         </div>
-      </router-link>
+      </div>
+      <!-- </router-link> -->
     </van-col>
-    <van-empty v-if="!goodsList.length" description="暂无商品" />
+    <van-empty class="emptyImg" v-if="!goodsList.length" image=".././static/icon_empty.png" description="暂无商品" />
   </van-row>
 </template>
 
 <script>
+import { Dialog } from "vant";
+
 export default {
   name: "GoodsItem",
   props: {
@@ -47,10 +52,21 @@ export default {
     },
   },
   methods: {
-    myCallback() {
-      this.pageNo = this.page;
-      this.records = result.data.total;
-      var data = { page: this.pageNo, rows: this.perPage };
+    navTo(item) {
+      var that = this
+      console.log(item);
+      this.$api.goodsquan({ goodid: item.id }).then((res) => {
+        if (res.data == 2 ) {
+          Dialog.confirm({
+            title: "购买入场卷",
+            message: "您还没有入场券，是否前去购买入场券?",
+          }).then(() => {
+            that.$router.push({ name: "AdmissionTicket" });
+          });
+        }else{
+          this.$router.push({ path: "/goodsdetails/" + item.id });
+        }
+      });
     },
   },
 };
@@ -96,6 +112,7 @@ export default {
           position: absolute;
           right: 0.4rem;
           top: 0.3rem;
+          z-index: 99;
         }
         img {
           width: 100%; // 4.0267rem /* 302/75 */;
@@ -125,5 +142,14 @@ export default {
       }
     }
   }
+}
+.emptyImg .van-empty__image{
+  width: 100%;
+  height: 5rem;
+}
+
+.van-image {
+    width: 100%;
+    height: 100%;
 }
 </style>

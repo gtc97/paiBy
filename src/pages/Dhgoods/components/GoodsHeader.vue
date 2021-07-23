@@ -1,5 +1,5 @@
 <template>
-    <van-nav-bar :title="title" class="header" @click-left="handleBack">
+    <van-nav-bar :title="title" class="notice-title" @click-left="handleBack">
         <template #left>
             <van-icon name="arrow-left" size="0.4rem" color="#333" />
         </template>

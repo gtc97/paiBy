@@ -1,6 +1,6 @@
 <template>
   <div class="broadcast">
-    <van-icon class="broadcast-icon" name="bullhorn-o" size="0.48rem" />
+    <van-icon class="broadcast-icon" name="bullhorn-o" size="0.5rem" />
     <van-swipe
       :autoplay="5000"
       :show-indicators="false"

@@ -6,7 +6,8 @@
           <span class="stock" :style="'background:' + item.backColor">{{
             item.status
           }}</span>
-          <img :src="item.goodsLogo" alt />
+          <!-- <img :src="item.goodsLogo" alt /> -->
+          <van-image  :src="item.goodsLogo" fit="cover" />
         </div>
         <div class="item-inner">
           <div class="title">{{ item.goodsName }}</div>
@@ -19,6 +20,7 @@
     </van-col>
     <van-empty
       v-if="!goodsList.length"
+      image=".././static/icon_empty.png"
       description="银币不够1000,暂时无法查看"
     />
     <!-- <van-col span="12">
@@ -69,7 +71,7 @@ export default {
       height: 4.2667rem /* 320/75 */;
       background-color: #fff;
       box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.16);
-      
+      position: relative;
         .stock {
           //   float: right;
           border-radius: 0.53rem /* 4/75 */;
@@ -84,6 +86,8 @@ export default {
           position: absolute;
           right: 0.4rem;
           top: 0.3rem;
+          
+          z-index: 99;
         }
       .item-img {
         box-sizing: border-box;
@@ -93,8 +97,8 @@ export default {
         width: 4.4rem /* 330/75 */;
         height: 2.6667rem /* 200/75 */;
         img {
-          width: 4.0267rem /* 302/75 */;
-          height: 1.8933rem /* 142/75 */;
+          // width: 4.0267rem /* 302/75 */;
+          // height: 1.8933rem /* 142/75 */;
           border-radius: 0.13rem;
         }
       }
@@ -128,5 +132,13 @@ export default {
       }
     }
   }
+}
+.van-empty__image {
+    width: 100% !important;
+    height: 5.26667rem  !important;
+}
+.van-image {
+    width: 100%;
+    height: 100%;
 }
 </style>

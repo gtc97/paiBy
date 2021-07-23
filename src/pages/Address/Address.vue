@@ -3,15 +3,28 @@
     <div v-show="!isShowEdit" class="address-list">
       <common-header title="收货地址" bg="#f5f5f5" />
       <van-radio-group v-model="radio">
-        <div v-for="(item, index) of addressList" :key="item.addressId" class="address-item">
-          <van-radio :name="item.isDefault" class="radio-wrap" @click="handleRadioClick(index)">
+        <div
+          v-for="(item, index) of addressList"
+          :key="item.addressId"
+          class="address-item"
+        >
+          <van-radio
+            :name="item.isDefault"
+            class="radio-wrap"
+            @click="handleRadioClick(index)"
+          >
             <div class="address-top">
               <i class="name" v-html="item.name" />
               <i class="phone" v-html="item.phone">17688888888</i>
             </div>
             <div
               class="address-inner"
-              v-html="item.provinceName + item.cityName +item.areaName + item.userAddress"
+              v-html="
+                item.provinceName +
+                item.cityName +
+                item.areaName +
+                item.userAddress
+              "
             />
           </van-radio>
           <div class="edit" @click="handleEditAddress(index)">编辑</div>
@@ -28,20 +41,25 @@
         </div>-->
       </van-radio-group>
       <div class="add-address-wrap">
-        <router-link to="/addAddress" class="add-address" :style="'background:' + sysColor">新增收货地址</router-link>
+        <router-link
+          to="/addAddress"
+          class="add-address"
+          :style="'background:' + sysColor + ';color: #fff'"
+          >新增收货地址</router-link
+        >
       </div>
     </div>
-    <EditAddress v-if="isShowEdit" :info="info" @editSave="handleEditSave"/>
+    <EditAddress v-if="isShowEdit" :info="info" @editSave="handleEditSave" />
   </div>
 </template>
 
 <script>
-import { Toast } from 'vant'
-import EditAddress from './components/EditAddress'
+import { Toast } from "vant";
+import EditAddress from "./components/EditAddress";
 export default {
-  name: 'Address',
+  name: "Address",
   components: {
-    EditAddress
+    EditAddress,
   },
   data() {
     return {
@@ -50,44 +68,43 @@ export default {
       radio: 1,
       isShowEdit: 0,
       sysColor: localStorage.getItem("styleColor"),
-    }
+    };
   },
   mounted() {
     setTimeout(function () {
       this.sysColor = localStorage.getItem("styleColor");
     }, 1000);
-    this.getAddressList()
+    this.getAddressList();
   },
   methods: {
     // 获取地址列表
     getAddressList() {
-      this.$api.addressList().then(res => {
-        debugger
-        this.addressList = res.data.data
-        console.log(res)
-      })
+      this.$api.addressList().then((res) => {
+        this.addressList = res.data.data;
+        console.log(res);
+      });
     },
     // 编辑地址
     handleEditAddress(index) {
-      this.info = this.addressList[index]
-      this.isShowEdit = 1
+      this.info = this.addressList[index];
+      this.isShowEdit = 1;
     },
     // 处理编辑完成
     handleEditSave() {
-      this.isShowEdit = 0
-      this.info = {}
-      this.getAddressList()
+      this.isShowEdit = 0;
+      this.info = {};
+      this.getAddressList();
     },
     // 处理单框点击
     handleRadioClick(index) {
       this.$api
         .setDefaultAddress({ addressId: this.addressList[index].addressId })
-        .then(res => {
-          Toast(res.msg)
-        })
-    }
-  }
-}
+        .then((res) => {
+          Toast(res.msg);
+        });
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -144,8 +161,8 @@ export default {
         z-index: 999;
         right: 0.4rem /* 30/75 */;
         top: 50%;
-        height: .5333rem /* 40/75 */;
-        line-height: .5333rem /* 40/75 */;
+        height: 0.5333rem /* 40/75 */;
+        line-height: 0.5333rem /* 40/75 */;
         transform: translateY(-50%);
         font-size: 0.32rem /* 24/75 */;
         color: #333;

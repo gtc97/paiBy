@@ -7,15 +7,16 @@
       :title-active-color="sysColor"
       title-inactive-color="#333"
       animated
+      @change="onNavBarClick"
     >
       <van-tab title="全部" name="all">
         <div class="item-list">
           <div v-for="item of orderAll" :key="item.id" class="item">
-            <div @click="navTO(item)">
+            <div>
               <div style="font-size: 0.32rem; margin-bottom: 0.2rem">
                 <span data-v-2c8a74d2>购买时间：{{ item.createTime }}</span>
               </div>
-              <div class="item-header">
+              <div class="item-header" @click="navTO(item)">
                 <img :src="item.goodsLogo" alt />
                 <div class="item-info">
                   <h2 class="item-title">{{ item.goodsName }}</h2>
@@ -32,227 +33,310 @@
                 {{ printStatusText(item.status) }}
                 <span v-if="item.status != 6">¥{{ item.sumPrice }}</span>
               </div>
-            </div>
-            <div class="item-button" style="z-index: 99">
-              <router-link
-                :to="{ path: '/order', query: { id: item.id } }"
-                class="pay"
-                v-if="item.status == 1"
-                >付款</router-link
-              >
-              <div
-                v-if="item.status == 1"
-                class="cancel"
-                @click="handleCancelOrder(item.id)"
-              >
-                取消
+              <div class="item-button" style="z-index: 99">
+                <router-link
+                  :to="{ path: '/order', query: { id: item.id } }"
+                  class="pay"
+                  v-if="item.status == 1"
+                  >付款</router-link
+                >
+                <div
+                  v-if="item.status == 1"
+                  class="cancel"
+                  style="margin-right: 0.2rem"
+                  @click="handleCancelOrder(item.id)"
+                >
+                  取消
+                </div>
+                <div
+                  class="cancel"
+                  v-show="
+                    (item.max_yn == 1 || item.guoqi == 1) &&
+                    item.status == 4 &&
+                    jfdhFun !== '1'
+                  "
+                  @click="chang(item)"
+                >
+                  置换
+                </div>
+                <div
+                  v-if="item.status == 4"
+                  class="cancel"
+                  style="margin-left: 0.5rem"
+                  @click="take(item)"
+                >
+                  提货
+                </div>
+                <div
+                  class="pay"
+                  style="margin-right: 0.2rem"
+                  v-show="
+                    item.guoqi !== 1 && item.status == 4 && jfdhFun == '1'
+                  "
+                  @click="exchangePoints(item.id)"
+                >
+                  兑换积分
+                </div>
+                <div
+                  class="pay"
+                  style="margin-right: 0.2rem"
+                  v-show="item.guoqi !== 1 && item.status == 4"
+                  @click="handleReSell(item)"
+                >
+                  转拍
+                </div>
               </div>
-              <div v-if="item.status == 6" class="cancel" @click="take(item)">
-                提货
-              </div>
-              <div v-if="item.status == 6" class="cancel" @click="chang(item)">
-                置换银币
-              </div>
+              <div style="clear: both"></div>
             </div>
           </div>
-          <div style="clear: both"></div>
         </div>
-        <van-empty v-if="!orderAll.length" description="暂无订单" />
+        <van-empty
+          v-if="!orderAll.length"
+          image=".././static/icon_empty.png"
+          description="暂无订单"
+        />
       </van-tab>
       <van-tab title="待付款" name="wait">
         <div class="item-list payment">
           <van-checkbox-group ref="checkboxGroup" v-model="result">
-            <van-swipe-cell
-              v-for="item of toBePaid"
-              :key="item.id"
-              @click="navTO(item)"
-            >
-              <template #left>
-                <van-checkbox :name="item.id" checked-color="#FDB428" />
-              </template>
+            <van-swipe-cell v-for="item of toBePaid" :key="item.id">
               <div>
-                <div class="item" to="/">
-                  <p style="font-size: 0.32rem; padding-bottom: 8px">
-                    购买时间：{{ item.createTime }}
-                  </p>
-                  <div class="item-header">
-                    <img :src="item.goodsLogo" alt />
-                    <div class="item-info">
-                      <h2 class="item-title">{{ item.goodsName }}</h2>
-                      <div class="item-center">
-                        <span class="price">¥{{ item.price }}</span>
-                        <i class="num">X{{ item.num }}</i>
+                <!-- <p>
+                  <van-checkbox :name="item.id" checked-color="#FDB428" />
+                </p> -->
+                <div>
+                  <div class="item" to="/">
+                    <p style="font-size: 0.32rem; padding-bottom: 8px">
+                      购买时间：{{ item.createTime }}
+                    </p>
+                    <div class="item-header" @click="navTO(item)">
+                      <img :src="item.goodsLogo" alt />
+                      <div class="item-info">
+                        <h2 class="item-title">{{ item.goodsName }}</h2>
+                        <div class="item-center">
+                          <span class="price">¥{{ item.price }}</span>
+                          <i class="num">X{{ item.num }}</i>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="item-bottom">
-                    合计需支付：
-                    <span>¥{{ item.sumPrice }}</span>
-                  </div>
-                </div>
-                <div class="item-button">
-                  <router-link
-                    :to="{ path: '/order', query: { id: item.id } }"
-                    class="pay"
-                    >付款</router-link
-                  >
-                  <div class="cancel" @click="handleCancelOrder(item.id)">
-                    取消
+                    <div class="item-bottom">
+                      合计需支付：
+                      <span>¥{{ item.sumPrice }}</span>
+                    </div>
+                    <div class="item-button">
+                      <router-link
+                        :to="{ path: '/order', query: { id: item.id } }"
+                        class="pay"
+                        >付款</router-link
+                      >
+                      <div class="cancel" @click="handleCancelOrder(item.id)">
+                        取消
+                      </div>
+                    </div>
+                    <div style="clear: both"></div>
                   </div>
                 </div>
               </div>
             </van-swipe-cell>
           </van-checkbox-group>
         </div>
-        <van-empty v-if="!toBePaid.length" description="暂无订单" />
+        <van-empty
+          v-if="!toBePaid.length"
+          image=".././static/icon_empty.png"
+          description="暂无订单"
+        />
       </van-tab>
       <van-tab title="已付款" name="already">
         <div class="item-list">
-          <div
-            v-for="item of Paid"
-            :key="item.id"
-            class="item"
-            @click="navTO(item)"
-          >
-            <p style="font-size: 0.32rem; padding-bottom: 8px">
-              购买时间：{{ item.createTime }}
-            </p>
-            <div class="item-header">
-              <img :src="item.goodsLogo" alt />
-              <div class="item-info">
-                <h2 class="item-title">{{ item.goodsName }}</h2>
+          <div v-for="item of Paid" :key="item.id" class="item">
+            <div>
+              <p style="font-size: 0.32rem; padding-bottom: 8px">
+                购买时间：{{ item.createTime }}
+              </p>
+              <div class="item-header" @click="navTO(item)">
+                <img :src="item.goodsLogo" alt />
+                <div class="item-info">
+                  <h2 class="item-title">{{ item.goodsName }}</h2>
 
-                <div class="item-center">
-                  <span class="price">¥{{ item.price }}</span>
-                  <i class="num">X{{ item.num }}</i>
+                  <div class="item-center">
+                    <span class="price">¥{{ item.price }}</span>
+                    <i class="num">X{{ item.num }}</i>
+                  </div>
                 </div>
               </div>
+              <div style="float: left; font-size: 0.32rem">
+                <span data-v-2c8a74d2>卖家电话：{{ item.userPhone }}</span>
+              </div>
+              <div class="item-bottom">
+                已付款
+                <span>¥{{ item.sumPrice }}</span>
+              </div>
             </div>
-            <div style="float: left; font-size: 0.32rem">
-              <span data-v-2c8a74d2>卖家电话：{{ item.userPhone }}</span>
-            </div>
-            <div class="item-bottom">
-              已付款
-              <span>¥{{ item.sumPrice }}</span>
-            </div>
+            <div style="clear: both"></div>
           </div>
         </div>
-        <van-empty v-if="!Paid.length" description="暂无订单" />
+        <van-empty
+          v-if="!Paid.length"
+          image=".././static/icon_empty.png"
+          description="暂无订单"
+        />
       </van-tab>
 
       <van-tab title="已完成/待转售" name="resale">
         <div class="item-list resell">
-          <div
-            v-for="item of Completed"
-            :key="item.id"
-            class="item"
-            @click="navTO(item)"
-          >
-            <p style="font-size: 0.32rem; padding-bottom: 8px">
-              购买时间：{{ item.createTime }}
-            </p>
-            <div class="item-header">
-              <img :src="item.goodsLogo" alt />
-              <div class="item-info">
-                <h2 class="item-title">{{ item.goodsName }}</h2>
+          <div v-for="item of Completed" :key="item.id" class="item">
+            <div>
+              <p style="font-size: 0.32rem; padding-bottom: 8px">
+                购买时间：{{ item.createTime }}
+              </p>
+              <div class="item-header" @click="navTO(item)">
+                <img :src="item.goodsLogo" alt />
+                <div class="item-info">
+                  <h2 class="item-title">{{ item.goodsName }}</h2>
 
-                <div class="item-center">
-                  <span class="price">¥{{ item.price }}</span>
-                  <i class="num">X{{ item.num }}</i>
+                  <div class="item-center">
+                    <span class="price">¥{{ item.price }}</span>
+                    <i class="num">X{{ item.num }}</i>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="item-bottom">
-              已完成/待转售
-              <span>¥{{ item.sumPrice }}</span>
-            </div>
-            <div class="item-button">
-              <div class="pay" @click="handleReSell(item.id)">转售</div>
+              <div class="item-bottom">
+                已完成/待转售
+                <span>¥{{ item.sumPrice }}</span>
+              </div>
+              <div class="item-button">
+                <div
+                  class="pay"
+                  style="margin-right: 0.2rem"
+                  v-show="
+                    (item.max_yn == 1 || item.guoqi == 1) && jfdhFun !== '1'
+                  "
+                  @click="chang(item)"
+                >
+                  置换
+                </div>
+                <div
+                  class="pay"
+                  style="margin-right: 0.2rem"
+                  v-show="item.guoqi !== 1 && jfdhFun !== '1'"
+                  @click="handleReSell(item)"
+                >
+                  转拍
+                </div>
+                <div
+                  class="pay"
+                  style="margin-right: 0.2rem"
+                  @click="take(item)"
+                >
+                  提货
+                </div>
+                <div
+                  class="pay"
+                  style="margin-right: 0.2rem"
+                  v-show="
+                    item.guoqi !== 1 && item.status == 4 && jfdhFun == '1'
+                  "
+                  @click="exchangePoints(item.id)"
+                >
+                  兑换积分
+                </div>
+              </div>
+              <div style="clear: both"></div>
             </div>
           </div>
-          <van-empty v-if="!Completed.length" description="暂无订单" />
+          <van-empty
+            v-if="!Completed.length"
+            image=".././static/icon_empty.png"
+            description="暂无订单"
+          />
         </div>
       </van-tab>
       <van-tab title="已取消" name="cancel">
         <div class="item-list">
-          <div
-            v-for="item of Cancelled"
-            :key="item.id"
-            class="item"
-            @click="navTO(item)"
-          >
-            <div class="item-header">
-              <img :src="item.goodsLogo" alt />
-              <div class="item-info">
-                <h2 class="item-title">{{ item.goodsName }}</h2>
+          <div v-for="item of quxiaoList" :key="item.id" class="item">
+            <div>
+              <div class="item-header" @click="navTO(item)">
+                <img :src="item.goodsLogo" alt />
+                <div class="item-info">
+                  <h2 class="item-title">{{ item.goodsName }}</h2>
 
-                <div class="item-center">
-                  <span class="price">¥{{ item.price }}</span>
-                  <i class="num">X{{ item.num }}</i>
+                  <div class="item-center">
+                    <span class="price">¥{{ item.price }}</span>
+                    <i class="num">X{{ item.num }}</i>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="item-bottom">
-              已取消
-              <span>¥{{ item.sumPrice }}</span>
+              <div class="item-bottom">
+                已取消
+                <span>¥{{ item.sumPrice }}</span>
+              </div>
+              <div style="clear: both"></div>
             </div>
           </div>
-          <van-empty v-if="!Cancelled.length" description="暂无订单" />
+          <van-empty
+            v-if="!quxiaoList.length"
+            image=".././static/icon_empty.png"
+            description="暂无订单"
+          />
         </div>
       </van-tab>
 
       <van-tab title="已置换" name="replaced">
         <div class="item-list">
-          <div
-            v-for="item of Cancelled"
-            :key="item.id"
-            class="item"
-            @click="navTO(item)"
-          >
-            <div class="item-header">
-              <img :src="item.goodsLogo" alt />
-              <div class="item-info">
-                <h2 class="item-title">{{ item.goodsName }}</h2>
+          <div v-for="item of Cancelled" :key="item.id" class="item">
+            <div>
+              <div class="item-header" @click="navTO(item)">
+                <img :src="item.goodsLogo" alt />
+                <div class="item-info">
+                  <h2 class="item-title">{{ item.goodsName }}</h2>
 
-                <div class="item-center">
-                  <span class="price">¥{{ item.price }}</span>
-                  <i class="num">X{{ item.num }}</i>
+                  <div class="item-center">
+                    <span class="price">¥{{ item.price }}</span>
+                    <i class="num">X{{ item.num }}</i>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="item-bottom">
-              已取消
-              <span>¥{{ item.sumPrice }}</span>
+              <div class="item-bottom">
+                已取消
+                <span>¥{{ item.sumPrice }}</span>
+              </div>
+              <div style="clear: both"></div>
             </div>
           </div>
-          <van-empty v-if="!Cancelled.length" description="暂无订单" />
+          <van-empty
+            v-if="!Cancelled.length"
+            image=".././static/icon_empty.png"
+            description="暂无订单"
+          />
         </div>
       </van-tab>
       <van-tab title="已兑换" name="converted">
         <div class="item-list">
-          <div
-            v-for="item of Cancelled"
-            :key="item.id"
-            class="item"
-            @click="navTO(item)"
-          >
-            <div class="item-header">
-              <img :src="item.goodsLogo" alt />
-              <div class="item-info">
-                <h2 class="item-title">{{ item.goodsName }}</h2>
+          <div v-for="item of duihuan" :key="item.id" class="item">
+            <div>
+              <div class="item-header" @click="navTO(item)">
+                <img :src="item.goodsLogo" alt />
+                <div class="item-info">
+                  <h2 class="item-title">{{ item.goodsName }}</h2>
 
-                <div class="item-center">
-                  <span class="price">¥{{ item.price }}</span>
-                  <i class="num">X{{ item.num }}</i>
+                  <div class="item-center">
+                    <span class="price">¥{{ item.price }}</span>
+                    <i class="num">X{{ item.num }}</i>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="item-bottom">
-              已取消
-              <span>¥{{ item.sumPrice }}</span>
+              <div class="item-bottom">
+                已取消
+                <span>¥{{ item.sumPrice }}</span>
+              </div>
+              <div style="clear: both"></div>
             </div>
           </div>
-          <van-empty v-if="!Cancelled.length" description="暂无订单" />
+          <van-empty
+            v-if="!duihuan.length"
+            image=".././static/icon_empty.png"
+            description="暂无订单"
+          />
         </div>
       </van-tab>
     </van-tabs>
@@ -280,37 +364,72 @@ export default {
       Completed: [],
       Cancelled: [],
       result: [],
+      quxiaoList: [],
       active: this.$route.query.active ? this.$route.query.active : 0,
       checkedAll: false,
       sysColor: localStorage.getItem("styleColor"),
+      duihuan: [],
+      jfdhFun: "",
     };
   },
   mounted() {
     setTimeout(function () {
       this.sysColor = localStorage.getItem("styleColor");
     }, 1000);
+    this.getjifen();
+    this.getOrderList();
   },
-  watch: {
-    orderList() {
-      this.orderAll = this.orderList;
-      this.toBePaid = this.orderList.filter((i) => i.status === 1);
-      this.Paid = this.orderList.filter((i) => i.status === 2);
-      this.Cancelled = this.orderList.filter((i) => i.status === 3);
-      this.Completed = this.orderList.filter((i) => i.status === 4);
-    },
+  created() {
+    this.getOrderList();
   },
+  // watch: {
+  //   orderList() {
+  //     this.orderAll = this.orderList;
+  //     this.toBePaid = this.orderList.filter((i) => i.status === 1);
+  //     this.Paid = this.orderList.filter((i) => i.status === 2);
+  //     this.quxiaoList = this.orderList.filter((i) => i.status === 3);
+  //     this.Cancelled = this.orderList.filter((i) => i.status === 7);
+  //     this.Completed = this.orderList.filter((i) => i.status === 4);
+  //     this.duihuan = this.orderList.filter((i) => i.status === 9);
+  //   },
+  // },
   methods: {
+    exchangePoints(id) {
+      Dialog.confirm({
+        title: "积分兑换",
+        message: "确认兑换成积分吗?",
+      }).then(() => {
+        this.$api.convert({ orderid: id }).then((res) => {
+          Toast(res.msg);
+          setTimeout(() => {
+            this.getOrderList();
+            // window.location.reload();
+            that.$router.push({ path: "/pay" });
+          }, 500);
+        });
+      });
+    },
+    getjifen() {
+      this.$api.jfdh().then((res) => {
+        // data == 1 开启了积分兑换模式
+        this.jfdhFun = res.data;
+      });
+    },
+    orderChange() {
+      // this.orderAll = this.orderList;
+      this.toBePaid = this.orderAll.filter((i) => i.status === 1);
+      this.Paid = this.orderAll.filter((i) => i.status === 2);
+      this.quxiaoList = this.orderAll.filter((i) => i.status === 3);
+      this.Cancelled = this.orderAll.filter((i) => i.status === 7);
+      this.Completed = this.orderAll.filter((i) => i.status === 4);
+      this.duihuan = this.orderAll.filter((i) => i.status === 9);
+    },
     navTO(item) {
       // this.$router.push('/FileDetail')
       this.$router.push({ name: "OrderDetails", params: { id: item.id } });
     },
     // 取消订单
     handleCancelOrder(id) {
-      if (id.length <= 0) {
-        Toast("您还没有全选");
-        return;
-      }
-      id = typeof id === "object" ? id.join(",") : id;
       console.log(id);
       Dialog.confirm({
         title: "取消订单",
@@ -318,7 +437,9 @@ export default {
       }).then(() => {
         this.$api.cancelOrder({ ids: id }).then((res) => {
           Toast(res.msg);
-          //window.location.reload();
+          this.getOrderList();
+          // window.location.reload();
+          that.$router.push({ path: "/pay" });
         });
       });
     },
@@ -329,22 +450,15 @@ export default {
         return;
       }
       console.log(this.result.join(","));
+      this.getOrderList();
       this.$router.push({
         path: "/order",
         query: { id: this.result.join(",") },
       });
     },
     // 处理转售
-    handleReSell(id) {
-      Dialog.confirm({
-        title: "转售",
-        message: "确定转售订单吗?",
-      }).then(() => {
-        this.$api.sellOrder({ id }).then((res) => {
-          Toast(res.msg);
-          window.location.reload();
-        });
-      });
+    handleReSell(item) {
+      this.navTO(item);
     },
     // 选择全部
     checkAll() {
@@ -389,22 +503,48 @@ export default {
     },
     getOrderList() {
       this.$api.orderList().then((res) => {
+        // this.orderAll = this.orderList;
         this.orderAll = res.data.data;
+        this.orderChange();
       });
     },
     // 提货
     take(item) {
-      this.$api.tihuo({ id: item.id, addressId: 1 }).then((res) => {
-        console.log(res);
-        this.getOrderList();
+      Dialog.confirm({
+        title: "提货",
+        message: "将根据默认地发货，确定提货么?",
+      }).then(() => {
+        this.$api.tihuo({ id: item.id, addressId: 1 }).then((res) => {
+          Toast(res.msg);
+          console.log(res);
+          this.getOrderList();
+
+          setTimeout(() => {
+            this.$router.push({
+              path: "/dingdan",
+            });
+          }, 500);
+        });
       });
     },
     // 置换银币
     chang(item) {
-      this.$api.goodsCreateorder({ id: item.id, num: 1 }).then((res) => {
-        console.log(res);
-        this.getOrderList();
+      Dialog.confirm({
+        title: "置换",
+        message: "确定要置换成银币吗?",
+      }).then(() => {
+        this.$api.mairuzhihuan({ orderid: item.id }).then((res) => {
+          Toast(res.msg);
+          console.log(res);
+          setTimeout(() => {
+            this.getOrderList();
+          }, 500);
+        });
       });
+    },
+    onNavBarClick() {
+      // this.Getliupai()
+      this.getOrderList();
     },
   },
 };
@@ -437,6 +577,10 @@ export default {
       }
     }
   }
+}
+.van-empty__image {
+  width: 100% !important;
+  height: 5.26667rem !important;
 }
 </style>
 
@@ -541,7 +685,7 @@ export default {
   .item-list.payment,
   .item-list.resell {
     .item {
-      height: 4.5rem /* 306/75 */;
+      // height: 4.5rem /* 306/75 */;
 
       .item-button {
         margin-top: 0.3333rem /* 25/75 */;
@@ -608,6 +752,7 @@ export default {
 
       .pay {
         color: #fdb428;
+        margin-right: 0.5rem;
         border: 1px solid #fdb428;
       }
 

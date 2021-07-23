@@ -31,7 +31,7 @@ export default {
         handleCreateOrder() {
             console.log(this.$route.params.id);
             this.$api
-                .createOrder({ id: this.$route.params.id, num: 1 })
+                .goodsCreateorder({ id: this.$route.params.id, num: 1 })
                 .then(res => {
                     console.log(res);
                     if (res.status === 1) {
@@ -115,7 +115,7 @@ export default {
                 line-height: 0.9333rem /* 70/75 */;
                 text-align: center;
                 font-size: 0.4267rem /* 32/75 */;
-                color: #333;
+                color: #fff;
                 background: #fdb428;
             }
         }

@@ -1,5 +1,5 @@
 <template>
-  <van-nav-bar :title="title" :style="{backgroundColor: bg}" class="common-header" @click-left="handleBack">
+  <van-nav-bar :title="title" :style="{backgroundColor: bg,color: color}" class="common-header" @click-left="handleBack">
     <template #left>
       <van-icon name="arrow-left" size="0.4rem" color="#333" />
     </template>
@@ -21,7 +21,13 @@ export default {
       default() {
         return '#fff'
       }
-    }
+    },
+    color: {
+      type: String,
+      default() {
+        return '#000'
+      }
+    },
   },
   methods: {
     // 返回上一层

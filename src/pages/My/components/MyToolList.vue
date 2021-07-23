@@ -6,7 +6,7 @@
         <div class="content">
           <router-link to="/pay">
             <div style="display: grid">
-              <img src="../../../../static/buy_icon.png" alt="" />
+              <img src="../../../../static/xufei_icon.png" alt="" />
               <div class="text">买单</div>
             </div>
           </router-link>
@@ -15,7 +15,7 @@
         <div class="content">
           <router-link to="/sellOrder">
             <div style="display: grid">
-              <img src="../../../../static/sell_bill_icon.png" alt="" />
+              <img src="../../../../static/zhifu_icon.png" alt="" />
               <div class="text">卖单</div>
             </div>
           </router-link>
@@ -23,7 +23,7 @@
         <div class="content">
           <router-link to="/invitation">
             <div style="display: grid">
-              <img src="../../../../static/ercode_icon.png" alt="" />
+              <img src="../../../../static/dingdanwancheng_icon.png" alt="" />
               <div class="text">邀请码</div>
             </div>
           </router-link>
@@ -31,23 +31,23 @@
         <div class="content">
           <router-link to="/AdmissionTicket">
             <div style="display: grid">
-              <img src="../../../../static/ercode_icon.png" alt="" />
-              <div class="text">入场卷</div>
+              <img src="../../../../static/tuihui_icon.png" alt="" />
+              <div class="text">入场券</div>
             </div>
           </router-link>
         </div>
-        <div class="content">
+        <!-- <div class="content">
           <router-link to="/rewardsNew">
             <div style="display: grid">
-              <img src="../../../../static/share_gift_icon.png" alt="" />
+              <img src="../../../../static/fenxiang_icon_1.png" alt="" />
               <div class="text">分享奖励</div>
             </div>
           </router-link>
-        </div>
+        </div> -->
         <div class="content">
           <router-link to="/address">
             <div style="display: grid">
-              <img src="../../../../static/location_icon1.png" alt="" />
+              <img src="../../../../static/dingwei_icon.png" alt="" />
               <div class="text">收货地址</div>
             </div>
           </router-link>
@@ -55,7 +55,7 @@
         <div class="content">
           <router-link to="/seting">
             <div style="display: grid">
-              <img src="../../../../static/money_icon2.png" alt="" />
+              <img src="../../../../static/qushiyong_icon.png" alt="" />
               <div class="text">收款设置</div>
             </div>
           </router-link>
@@ -71,7 +71,7 @@
         <div class="content">
           <router-link to="/guize">
             <div style="display: grid">
-              <img src="../../../../static/buy_icon.png" alt="" />
+              <img src="../../../../static/guanyu_icon.png" alt="" />
               <div class="text">规则指引</div>
             </div>
           </router-link>
@@ -79,7 +79,7 @@
         <div class="content">
           <router-link to="/dingdan">
             <div style="display: grid">
-              <img src="../../../../static/buy_icon.png" alt="" />
+              <img src="../../../../static/yue_icon.png" alt="" />
               <div class="text">实物订单</div>
             </div>
           </router-link>

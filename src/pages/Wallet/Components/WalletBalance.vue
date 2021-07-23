@@ -1,9 +1,10 @@
 <template>
-  <div class="balance" :style="'background:' + sysColor">
+  <div class="balance" :style="'background:' + sysColor ">
     <h3 class="balance-title">账户余额（元）</h3>
     <p class="balance-content">
       ¥{{ money }}
     </p>
+    <div style="float:right;margin-top: -1.2rem;font-size: 0.6rem;margin-right: 0.5rem;"><router-link to="/balanceType" style="color:#fff;"> 提现明细</router-link></div>
   </div>
 </template>
 

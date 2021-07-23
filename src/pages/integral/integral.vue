@@ -17,9 +17,9 @@
       </div>
       <!-- <span class="right"><router-link to="/rakeback" style="color:#fff">明细</router-link></span> -->
     </div>
-    <div class="second">
-        <button :style="'background:' + sysColor"><router-link to="/convertIntegral" style="color:#fff">兑换</router-link></button>
-    </div>
+    <!-- <div class="second">
+        <button :style="'background:' + sysColor "><router-link to="/convertIntegral" style="color:#fff">兑换</router-link></button>
+    </div> -->
   </div>
 </template>
 <script>
@@ -30,7 +30,7 @@ export default {
     return {
       show: false,
       rewardInfo: {},
-      sysColor: '#F0721E',
+      sysColor: '#fdb428',
       money:'0.00',
       integral:'0.00',
     };
@@ -44,7 +44,7 @@ export default {
       this.$api.cardlist().then((res) => {
         console.log(res);
         this.dataList = res.data
-        Toast(res.msg);
+        // Toast(res.msg);
       });
     },
     getUserInfo(){
@@ -78,6 +78,7 @@ export default {
       text-align:center;
       .moneyTit{
         font-size: 0.8rem;
+        color: #fff;
       }
       button{
         border:0.02rem solid #fff;

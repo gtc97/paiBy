@@ -8,7 +8,7 @@
             <p class="event-title">{{ printTypeText(item.type) }}</p>
             <p class="event-time">{{ item.createTime }}</p>
           </div>
-          <div class="itme-right">-{{ item.money }}</div>
+          <div class="itme-right">+{{ item.money }}</div>
         </li>
         <!-- <li class="info-des-item">
           <div class="item-left">
@@ -27,7 +27,7 @@
             <p class="event-title">{{ printTypeText(item.type) }}</p>
             <p class="event-time">{{ item.checkTime }}</p>
           </div>
-          <div class="itme-right">-{{ item.money }}</div>
+          <div class="itme-right">+{{ item.money }}</div>
         </li>
         <!-- <li class="info-des-item">
           <div class="item-left">

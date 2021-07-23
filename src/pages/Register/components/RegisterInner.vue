@@ -35,7 +35,8 @@
       <div class="agreement">
         <van-checkbox v-model="agreement" checked-color="#FDB428">
           阅读并同意
-          <router-link to="/agreement">《用户注册协议》</router-link>
+          <!-- <router-link to="/agreement">《用户注册协议》</router-link> -->
+          <router-link to="/zhuceAgreement">《用户注册协议》</router-link>
           <!-- <a href="/down/" style="margin-left: 4em">点击下载App</a> -->
         </van-checkbox>
       </div>
@@ -56,7 +57,7 @@ export default {
         cardID: '',
         userPhone: '',
         code: '',
-        inviteCode: this.$route.query.invite === 1 ? '' : this.$route.query.invite,
+        inviteCode:  localStorage.getItem('invite') == undefined? '': localStorage.getItem('invite'),//(this.$route.query.invite === 1 ? '' : this.$route.query.invite)
         notice: '获取验证码',
         overtime: true
       },
@@ -88,19 +89,30 @@ export default {
       }
       that.$api.register(that.user).then(res => {
         if (res.status === 1) {
-          const userInfo = {
-            userId: res.data.userId,
-            inviteCode: res.data.inviteCode,
-            userName: res.data.userName,
-            userPhone: res.data.userPhone,
-            money: res.data.money
-          }
-          localStorage.setItem('USER', JSON.stringify(userInfo))
-          localStorage.setItem('TOKEN', res.data.token)
+          // const userInfo = {
+          //   userId: res.data.userId,
+          //   inviteCode: res.data.inviteCode,
+          //   userName: res.data.userName,
+          //   userPhone: res.data.userPhone,
+          //   money: res.data.money,
+          //   is_bind: 1,
+          // }
+
+          // localStorage.setItem('is_bind',1)
+          var userInfo = JSON.parse(localStorage.getItem('userInfo')) 
+          // var is_bind = 1
+          
+          console.log(userInfo)
+          let key = "is_bind";
+          let value = 1
+          userInfo[key] = value;
+          console.log(userInfo)
+
+          localStorage.setItem('userInfo', JSON.stringify(userInfo))
           localStorage.setItem('IDS', 1)
           // url = url.substring(0, url.indexOf('?'))
           // location.href = url
-          this.$router.push({ path: '/' })
+          this.$router.push({ path: '/my' })
         } else {
           Toast(res.msg)
         }
@@ -265,7 +277,7 @@ export default {
       font-size: .4267rem /* 32/75 */;
       text-align: center;
       background: #FDB428;
-      color: #333;
+      color: #fff;
     }
   }
 }

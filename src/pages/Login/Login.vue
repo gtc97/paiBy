@@ -49,7 +49,7 @@
         没有账号？
         <router-link
           :to="{ path: '/register', query: { invite: 1 } }"
-          :style="'color:' + sysColor"
+          :style="'color:' + sysColor + 'color: #fff'"
           >点击注册</router-link
         >
 
@@ -97,10 +97,13 @@ export default {
   methods: {
     wxLogin() {
       const params = {
+        // appid: "wxc4fc9c52231729c7",
         appid: "wx1f648303799a12ba",
+        // redirect_uri: "http://hj.chaoyuephp.com",
         redirect_uri: "http://pmapi.chaoyuephp.com",
         response_type: "code",
         scope: "snsapi_userinfo",
+        // state: "wxc4fc9c52231729c7",
         state: "wx1f648303799a12ba",
       };
       // const params = {appid:'wx1f648303799a12ba',redirect_uri: 'http://192.168.1.7:8080',response_type: 'code',scope: 'snsapi_userinfo',state: 'wx1f648303799a12ba'};
@@ -121,7 +124,7 @@ export default {
             userPhone: res.data.userPhone,
             money: res.data.money,
           };
-          localStorage.setItem("USER", JSON.stringify(userInfo));
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
           localStorage.setItem("TOKEN", res.data.token);
           localStorage.setItem("IDS", 1);
         })
@@ -151,7 +154,7 @@ export default {
             userPhone: res.data.userPhone,
             money: res.data.money,
           };
-          localStorage.setItem("USER", JSON.stringify(userInfo));
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
           localStorage.setItem("TOKEN", res.data.token);
           localStorage.setItem("IDS", 1);
 

@@ -1,19 +1,24 @@
 <template>
   <div class="container">
     <GoodsHeader />
-    <div v-if="goodsList != 0" class="search">
-      <input type="text" v-model="textSearch" placeholder="请输入查询内容" />
-      <div class="inpSearch" @click="myCallback">搜索</div>
+    <div class="search">
+      <div class="left">
+        <img class="img" src="../../../static/search_icon.png" alt="">
+      </div>
+      <input class="input" type="text" v-model="textSearch" placeholder="请输入库存号" />
+      <div class="inpSearch" @click="myCallback(1)">搜索</div>
     </div>
-    <GoodsItem :goods-list="goodsList" />
-    <v-pagination
-      v-if="goodsList != 0"
-      :total="total"
-      :currentPage="currentPage"
-      :display="display"
-      :pagegroup="pagegroup"
-      @pagechange="myCallback"
-    ></v-pagination>
+    <GoodsItem :goods-list="goodsList" style="padding-bottom:2rem;" />
+    <div style="position: fixed;bottom: 0rem;width: 100%;background:#fff;">
+      <v-pagination
+        v-if="goodsList != 0"
+        :total="total"
+        :currentPage="currentPage"
+        :display="display"
+        :pagegroup="pagegroup"
+        @pagechange="myCallback"
+      ></v-pagination>
+    </div>
   </div>
 </template>
 
@@ -33,7 +38,7 @@ export default {
       textSearch: "",
       goodsList: [],
       total: 0, //数据总条数
-      display: 2, //每页显示条数
+      display: 30, //每页显示条数
       currentPage: 1, //当前页码
       pagegroup: 2, //分页条数
     };
@@ -42,21 +47,24 @@ export default {
     this.myCallback();
   },
   methods: {
-    getGoodsList() {
-      this.$api.goodsList({ catId: this.$route.query.type }).then((res) => {
-        this.goodsList = res.data;
-        for (var i = 0; i < this.goodsList.length; i++) {
-          this.goodsList[i].backColor = this.backColor(
-            this.goodsList[i].onlineStatus
-          );
-        }
-        console.log(res);
-      });
-    },
+    // getGoodsList() {
+    //   this.$api.goodsList({ catId: this.$route.query.type }).then((res) => {
+    //     this.goodsList = res.data;
+    //     for (var i = 0; i < this.goodsList.length; i++) {
+    //       this.goodsList[i].backColor = this.backColor(
+    //         this.goodsList[i].onlineStatus
+    //       );
+    //     }
+    //     console.log(res);
+    //   });
+    // },
     myCallback(num) {
       // this.pageNo = this.page;
-      this.currentPage = num;
+      if(num){
+        this.currentPage = num;
+      }
       var data = {
+        key: this.textSearch,
         page: this.currentPage,
         limit: this.display,
         catId: this.$route.query.type,
@@ -120,10 +128,20 @@ export default {
 .search {
   font-size: 0.4rem;
   padding: 0.2rem;
-  margin: 0.02rem;
-  border-radius: 0.2rem;
-  border: 0.01rem solid #ccc;
+  margin: 0.1rem;
+  /* border-radius: 0.2rem; */
+  /* border: 0.01rem solid #ccc; */
+  background: #F7F8FA;
 }
+.left{
+  float: left;
+  height: 0.5rem;
+  width: 0.5rem;
+  margin: 0 0.2rem 0 0.1rem;
+}
+  .input{
+    background: #F7F8FA;
+  }
 .inpSearch {
   float: right;
 }

@@ -92,7 +92,7 @@ export default {
 .notice-list {
   padding-right: 0.4rem /* 30/75 */;
   .van-cell {
-    padding: 0.4rem /* 30/75 */ 0 0.4rem /* 30/75 */ 0.4rem /* 30/75 */;
+    padding: 0.5rem /* 30/75 */ 0 0.4rem /* 30/75 */ 0.4rem /* 30/75 */;
     &:not(:last-child)::after {
       border-bottom: 0.02667rem solid #ddd;
     }
@@ -101,7 +101,7 @@ export default {
       text-overflow: ellipsis;
       white-space: nowrap;
       color: #333;
-      line-height: 0.3733rem /* 28/75 */;
+      // line-height: 0.3733rem /* 28/75 */;
       font-size: 0.3733rem; /* 28/75 */
     }
     .item-time {

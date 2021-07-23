@@ -13,14 +13,20 @@
                         multiple
                         class="ercode"
                     ></van-uploader>
+                    <div class="zfbMoney">上传支付宝收款码</div>
                     <van-field
                         v-model="alipay.payAccount"
                         label="支付宝号"
                         placeholder="请输入支付宝号或支付宝绑定手机号"
                     />
+                    <van-field
+                        v-model="alipay.name"
+                        label="姓名"
+                        placeholder="请输入姓名"
+                    />
                     <van-field v-model="alipay.phone" label="手机号" placeholder="请输入手机号"></van-field>
                 </van-cell-group>
-                <div class="submit-btn" @click="handleSubmitalipayPay" :style="'background:' + sysColor">确认并保存</div>
+                <div class="submit-btn" @click="handleSubmitalipayPay" :style="'background:'+ sysColor +';color: #fff'">确认并保存</div>
             </van-tab>
             <van-tab title="微信" class="weixin">
                 <template #title>
@@ -34,6 +40,12 @@
                         multiple
                         class="ercode"
                     ></van-uploader>
+                    <div class="zfbMoney">上传微信收款码</div>
+                    <van-field
+                        v-model="weixin.name"
+                        label="姓名"
+                        placeholder="请输入姓名"
+                    />
                     <van-field
                         v-model="weixin.payAccount"
                         label="微信号"
@@ -41,7 +53,7 @@
                     />
                     <van-field v-model="weixin.phone" label="手机号" placeholder="请输入手机号"></van-field>
                 </van-cell-group>
-                <div class="submit-btn" @click="handleSubmitWeixin" :style="'background:'+ sysColor +';'">确认并保存</div>
+                <div class="submit-btn" @click="handleSubmitWeixin" :style="'background:'+ sysColor +';color: #fff'">确认并保存</div>
             </van-tab>
             <van-tab class="unionpay">
                 <template #title>
@@ -57,7 +69,7 @@
                     <van-field v-model="unionpay.cardNum" label="银行卡号" placeholder="请输入银行卡号" />
                     <van-field v-model="unionpay.phone" label="手机号" placeholder="请输入手机号"></van-field>
                 </van-cell-group>
-                <div class="submit-btn" @click="handleSubmitUnionpayPay" :style="'background:'+ sysColor +';'">确认并保存</div>
+                <div class="submit-btn" @click="handleSubmitUnionpayPay" :style="'background:'+ sysColor +';color: #fff'">确认并保存</div>
             </van-tab>
         </van-tabs>
     </div>
@@ -67,7 +79,7 @@
 import { Toast } from "vant";
 import axios from "axios";
 import configObj from "@/http/config";
-
+var userPhone = JSON.parse(localStorage.getItem('userInfo')).userPhone
 export default {
     name: "SetingTab",
     data() {
@@ -77,20 +89,23 @@ export default {
             fileList: [],
             fileListWeiXin: [],
             alipay: {
-                phone: "",
+                phone: userPhone || '',
                 payAccount: "",
                 img: "",
+                name: '',
                 type: 2
             },
             weixin: {
-                phone: "",
+                phone: userPhone || '',
                 payAccount: "",
                 img: "",
+                name: '',
                 type: 3
             },
             unionpay: {
                 type: 1,
-                phone: "",
+                name: '',
+                phone: userPhone || '',
                 name: "",
                 bankName: "",
                 bankOtherName: "",
@@ -174,6 +189,7 @@ export default {
     },
     mounted() {
         this.getPaySetingInfo();
+        console.log(this.unionpay)
     },
     methods: {
         getPaySetingInfo() {
@@ -198,6 +214,7 @@ export default {
                         code: res.data.alipay.code,
                         payAccount: res.data.alipay.payAccount,
                         img:  res.data.alipay.img,
+                        name:  res.data.alipay.name,
                         type: 2
                     };
                 }
@@ -210,6 +227,7 @@ export default {
                         code: res.data.weixin.code,
                         payAccount: res.data.weixin.payAccount,
                         img:  res.data.weixin.img,
+                        name:  res.data.weixin.name,
                         type: 3
                     };
                 }
@@ -437,10 +455,15 @@ export default {
         font-size: 0.4267rem /* 32/75 */;
         text-align: center;
         background: #fdb428;
-        color: #333;
+        color: #fff;
     }
     .van-tabs--card > .van-tabs__wrap {
         height: 1.3rem;
     }
+}
+.zfbMoney{
+    font-size: 0.5rem;
+    margin: 0 auto;
+    text-align: center;
 }
 </style>

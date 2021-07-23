@@ -16,7 +16,7 @@
       <div
         class="submit-btn"
         @click="handleSubmitRegister"
-        :style="'background:' + sysColor"
+        :style="'background:' + sysColor + 'color: #fff'"
       >
         确认转换
       </div>
@@ -44,6 +44,7 @@ export default {
       changeMoney: "0.00",
       sysColor: "#FDB428",
       agreement: false,
+      money:'',
     };
   },
   created() {
@@ -226,7 +227,7 @@ export default {
     .submit-btn {
       cursor: pointer;
       border-radius: 0.1333rem /* 10/75 */;
-      width: 8.4rem /* 630/75 */;
+      // width: 8.4rem /* 630/75 */;
       height: 0.9333rem /* 70/75 */;
       line-height: 0.9333rem /* 70/75 */;
       font-size: 0.4267rem /* 32/75 */;

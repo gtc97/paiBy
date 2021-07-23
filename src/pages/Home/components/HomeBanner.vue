@@ -37,7 +37,7 @@ export default {
       }
     }
     .van-swipe__indicator {
-      border-radius: 0.04rem /* 3/75 */;
+      // border-radius: 0.04rem /* 3/75 */;
       width: 0.16rem /* 12/75 */;
       opacity: 1;
       background-color: #fff;
@@ -53,9 +53,10 @@ export default {
 .banner {
   box-shadow:0px 0px 16px 0px rgba(0, 0, 0, 0.25);
   overflow: hidden;
-  border-radius: 0.266667rem /* 20/75 */;
-  margin: 0.2667rem /* 20/75 */ auto;
-  width: 9.2rem /* 690/75 */;
+  // border-radius: 0.266667rem /* 20/75 */;
+  // margin: 0.2667rem /* 20/75 */ auto;
+  // width: 9.2rem /* 690/75 */;
+  width: 100% /* 690/75 */;
   height: 4rem /* 300/75 */;
 }
 </style>

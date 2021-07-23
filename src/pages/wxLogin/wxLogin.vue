@@ -33,6 +33,7 @@ export default {
       // 重定向地址重定到当前页面，在路径获取 code
       const hrefUrl = window.location.href;
       if (this.code === "") {
+        // ?appid=wxc4fc9c52231729c7
         window.location.href = `
 						https://open.weixin.qq.com/connect/oauth2/authorize
 						?appid=wx1f648303799a12ba

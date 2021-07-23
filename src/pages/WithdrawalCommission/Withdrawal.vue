@@ -24,10 +24,12 @@
       </van-radio-group>
       <div class="input-title">提现金额</div>
       <input v-model="money" type="text" class="money-input" placeholder="￥" />
+      <div class="input-title"> 可提现金额：￥{{ moneyNum }}</div>
+      <div class="input-title"> 提现手续费：{{ Service }}%</div>
       <div
         class="submit-btn"
         @click="handlePay"
-        :style="'background:' + sysColor + ';'"
+        :style="'background:' + sysColor + ';color:#fff'"
       >
         立即提现
       </div>
@@ -44,6 +46,7 @@ export default {
       radio: "1",
       payTypeList: [],
       userPayInfo: [],
+      moneyNum: 0,
       money: "",
       payType: [
         {
@@ -66,17 +69,29 @@ export default {
         },
       ],
       sysColor: localStorage.getItem("styleColor"),
+      Service: 0,
     };
   },
   mounted() {
+    this.getService();
+    this.getComMoney()
     this.getUserPayInfo();
     setTimeout(function () {
       this.sysColor = localStorage.getItem("styleColor");
     }, 1000);
   },
   methods: {
+    getService(){
+      this.$api.fee().then((res) => {
+        if(res.status == 1){
+          this.Service = res.data.credit3_fee
+        }else{
+          Toast(res.msg)
+        }
+      })
+    },
     getUserPayInfo() {
-      const userId = JSON.parse(localStorage.getItem("USER")).userId;
+      const userId = JSON.parse(localStorage.getItem("userInfo")).userId;
       console.log(userId);
       // 获取用户支付信息
       this.$api.getUserPayInfo({ userId }).then((res) => {
@@ -99,7 +114,7 @@ export default {
         Toast("提现失败，您的金额有误，请重新输入");
         return;
       }
-      var userId = JSON.parse(localStorage.getItem("USER")).userId;
+      var userId = JSON.parse(localStorage.getItem("userInfo")).userId;
       this.$api.drawcredit3({ userId: userId, money: this.money, type: this.radio }).then((res) => {
         if (res.msg === "请先上传收款信息") {
           Toast("请先上传收款信息");
@@ -110,7 +125,13 @@ export default {
           return;
         }
         Toast(res.msg);
-        this.$router.push({ path: "/wallet" });
+        this.$router.push({ path: "/rewardsNew" });
+      });
+    },
+    getComMoney(){
+      this.$api.finance().then((res) => {
+        this.moneyNum = res.data.credit3
+        console.log(res)
       });
     },
   },

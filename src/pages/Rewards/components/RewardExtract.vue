@@ -12,7 +12,7 @@
       <i class="item-label">当前提现进度：</i>
       <b class="item-info">无</b>
     </div>
-    <router-link to="/withdrawalCommission" class="extract-btn" :style="'background:' + sysColor + ';'">
+    <router-link to="/withdrawalCommission" class="extract-btn" :style="'background:' + sysColor + ';color: #fff'">
       申请提现
     </router-link>
   </div>

@@ -49,7 +49,6 @@ export default function $axios(options) {
         // 判断token是否过期
 
         // if (data.status === 1010) {
-          // debugger
           // localStorage.removeItem('TOKEN')
           // location.reload()
         // }

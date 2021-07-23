@@ -1,6 +1,6 @@
 <template>
   <div class="order-header">
-    <van-nav-bar class="order-header-inner" title="我的钱包" @click-left="handleBack">
+    <van-nav-bar id='reset' class="order-header-inner" title="我的钱包" @click-left="handleBack">
       <template #left>
         <van-icon name="arrow-left" size="0.4rem" color="#333" />
       </template>
@@ -14,7 +14,7 @@ export default {
   methods: {
     // 返回上一层
     handleBack() {
-      this.$router.go(-1)
+      this.$router.go(-2)
     }
   }
 }
@@ -30,5 +30,8 @@ export default {
       border: none;
     }
   }
+}
+#reset /deep/ .van-ellipsis{
+  color: #fff !important;
 }
 </style>

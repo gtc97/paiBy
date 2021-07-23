@@ -24,10 +24,12 @@
       </van-radio-group>
       <div class="input-title">提现金额</div>
       <input v-model="money" type="text" class="money-input" placeholder="￥" />
+      <div class="input-title"> 提现手续费：{{ Service }}%</div>
+      <div class="input-title"> 可提现金额：￥{{ moneyNum }}</div>
       <div
         class="submit-btn"
         @click="handlePay"
-        :style="'background:' + sysColor + ';'"
+        :style="'background:' + sysColor + ';color:#fff'"
       >
         立即提现
       </div>
@@ -45,6 +47,7 @@ export default {
       payTypeList: [],
       userPayInfo: [],
       money: "",
+      moneyNum: 0,
       payType: [
         {
           type: 1,
@@ -66,17 +69,29 @@ export default {
         },
       ],
       sysColor: localStorage.getItem("styleColor"),
+      Service:0,
     };
   },
   mounted() {
     this.getUserPayInfo();
+    this.getService();
+    this.getComMoney()
     setTimeout(function () {
       this.sysColor = localStorage.getItem("styleColor");
     }, 1000);
   },
   methods: {
+    getService(){
+      this.$api.fee().then((res) => {
+        if(res.status == 1){
+          this.Service = res.data.storage_fee
+        }else{
+          Toast(res.msg)
+        }
+      })
+    },
     getUserPayInfo() {
-      const userId = JSON.parse(localStorage.getItem("USER")).userId;
+      const userId = JSON.parse(localStorage.getItem("userInfo")).userId;
       console.log(userId);
       // 获取用户支付信息
       this.$api.getUserPayInfo({ userId }).then((res) => {
@@ -110,6 +125,12 @@ export default {
         }
         Toast(res.msg);
         this.$router.push({ path: "/wallet" });
+      });
+    },
+    getComMoney(){
+      this.$api.drawHistory().then((res) => {
+        this.moneyNum = res.data.drawMoney
+        console.log(res)
       });
     },
   },

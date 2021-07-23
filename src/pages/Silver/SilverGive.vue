@@ -3,13 +3,38 @@
     <common-header title="银元转赠" :bg="sysColor" style="color: #fff" />
 
     <div class="inner-wrap">
-      <van-cell-group>
+      <!-- <van-cell-group>
         <div class="input-label">手机号</div>
         <van-field
           v-model="user.userPhone"
           :rules="[{ required: true, message: '请填写手机号' }]"
           placeholder="请输入手机号"
         />
+      </van-cell-group> -->
+      <van-cell-group>
+        <div class="input-label">转赠人ID</div>
+        <van-field
+          v-model="user.userId"
+          :rules="[{ required: true, message: '请填写ID' }]"
+          placeholder="请输入"
+        />
+      </van-cell-group>
+      <van-cell-group>
+        <div class="input-label">转赠人姓名</div>
+        <van-field
+          v-model="user.userName"
+          :rules="[{ required: true, message: '请填写姓名' }]"
+          placeholder="请输入真实姓名"
+        />
+      </van-cell-group>
+      <van-cell-group>
+        <div class="input-label">数量</div>
+        <van-field v-model="user.num" placeholder="请输入数量" />
+      </van-cell-group>
+      
+      <van-cell-group v-show="false">
+        <div class="input-label">手机号</div>
+        <van-field v-model="user.userPhone" placeholder="请输入手机号" />
       </van-cell-group>
       <van-cell-group>
         <div class="input-label">验证码</div>
@@ -23,20 +48,13 @@
           </template>
         </van-field>
       </van-cell-group>
-      <van-cell-group>
-        <div class="input-label">数量</div>
-        <van-field v-model="user.inviteCode" placeholder="请输入数量" />
-      </van-cell-group>
-      <van-cell-group>
-        <div class="input-label">姓名</div>
-        <van-field
-          v-model="user.userName"
-          :rules="[{ required: true, message: '请填写姓名' }]"
-          placeholder="请输入真实姓名"
-        />
-      </van-cell-group>
-
-      <div class="submit-btn" @click="handleSubmitRegister" :style="'background:'+ sysColor">提交</div>
+      <div
+        class="submit-btn"
+        @click="handleSubmitRegister"
+        :style="'background:' + sysColor + ';color:#fff'"
+      >
+        提交
+      </div>
     </div>
   </div>
 </template>
@@ -52,40 +70,65 @@ export default {
         avatar: [],
         userName: "",
         cardID: "",
-        userPhone: "",
+        userPhone: JSON.parse(localStorage.getItem("userInfo")).userPhone,
         code: "",
-        inviteCode:this.$route.query.invite === 1 ? "" : this.$route.query.invite,
+        inviteCode:
+          this.$route.query.invite === 1 ? "" : this.$route.query.invite,
         notice: "获取验证码",
         overtime: true,
+        userId: "",
       },
-      sysColor: '#FDB428',
+      sysColor: "#FDB428",
       agreement: false,
     };
   },
-  created(){
-      this.sysColor = localStorage.getItem('styleColor')
+  created() {
+    this.sysColor = localStorage.getItem("styleColor");
   },
   methods: {
     // 处理提交转增
     handleSubmitRegister() {
-      this.$api.register(this.user).then((res) => {
-        if (res.status === 1) {
-            console.log(res.data.msg)
-        } else {
-          Toast(res.msg);
-        }
-      });
+      // this.user.userPhone = localStorage.getItem("userInfo").userPhone;
+      this.$api
+        .zhuanzeng({
+          type: 2,
+          tel: this.user.userPhone,
+          name: this.user.userName,
+          num: this.user.num,
+          userId: this.user.userId,
+          code: this.user.code,
+        })
+        .then((res) => {
+          if (res.status === 1) {
+            console.log(res.data.msg);
+            this.$router.push({ path: "/my" });
+          } else if (res.status == 3) {
+            Toast("输入信息有误！");
+          } else if (res.status == 2) {
+            Toast("银币不足！");
+          }
+        });
     },
     // 处理获取验证码
     handleGetVerificationCode() {
-      if (!checkPhone(this.user.userPhone)) {
-        Toast("您输入的手机号有误，请重新输入");
-        return;
-      }
       if (this.user.overtime === false) {
         Toast("请稍后重试");
         return;
       }
+
+      if (!this.user.userPhone) {
+        this.user.userPhone = JSON.parse(
+          localStorage.getItem("userInfo")
+        ).userPhone;
+      }
+      if (!checkPhone(this.user.userPhone)) {
+        Toast("您输入的手机号有误，请重新输入");
+        return;
+      }
+      // if (this.user.userPhone) {
+      //   Toast("您输入的手机号有误，请重新输入");
+      //   return;
+      // }
       this.$api
         .verificationCode({
           userPhone: this.user.userPhone,
@@ -234,13 +277,13 @@ export default {
     .submit-btn {
       cursor: pointer;
       border-radius: 0.1333rem /* 10/75 */;
-      width: 8.4rem /* 630/75 */;
+      // width: 8.4rem /* 630/75 */;
       height: 0.9333rem /* 70/75 */;
       line-height: 0.9333rem /* 70/75 */;
       font-size: 0.4267rem /* 32/75 */;
       text-align: center;
       background: #fdb428;
-      color: #333;
+      color: #fff;
     }
   }
 }

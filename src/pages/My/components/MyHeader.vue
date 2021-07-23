@@ -4,7 +4,7 @@
       <van-icon class="icon" name="../../../../static/customer_service_icon.png" />
     </template> -->
     <template #right>
-      <van-icon class="icon seting_icon" name="../../../../static/seting_icon.png" />
+      <van-icon class="icon seting_icon" name="../../../../static/seting.png" />
     </template>
   </van-nav-bar>
 </template>
@@ -22,7 +22,12 @@ export default {
         this.$api.loginOut().then(res => {
           if (res.status === 1) {
             localStorage.clear()
-            window.location.reload()
+            // var url = window.location.href
+            // url = url.split("?")[0]
+            // url = url.substring(0, url.indexOf('?'))
+            // location.href = url
+            // window.location.reload()
+            this.$router.push({path: "/",});
           }
         })
       })
@@ -30,7 +35,13 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" >
+.my-header{
+  background-color: #BD2F3B !important;
+  .van-nav-bar__title{
+    color:#fff !important;
+  }
+}
 .my-header{
   &::after {
     border: none;

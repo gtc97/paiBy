@@ -1,5 +1,10 @@
 <template>
-  <van-nav-bar class="header" title="竞拍">
+    <!-- :style="{ background: styleColor }" -->
+  <van-nav-bar
+    :style="'background: ' + styleColor "
+    class="header"
+    title="恒鉴拍卖汇"
+  >
     <!-- <template #left>
       <van-icon class="icon" name="../../../../static/customer_service_icon.png" size="0.48rem" />
     </template>
@@ -11,22 +16,34 @@
 
 <script>
 export default {
-  name: 'HomeHeader'
-}
+  name: "HomeHeader",
+  data() {
+    return {
+      styleColor: "#bd2f3b",
+    };
+  },
+  created() {
+    // this.styleColor = localStorage.getItem("styleColor") || '';
+  },
+};
 </script>
 
 <!--穿透设置顶部样式 -->
 <style lang="less">
 .header {
   .van-nav-bar__title {
-    color: #333;
+    color: #fff;
     font-size: 0.48rem;
+    // background-color: ;
   }
   .icon {
     img {
       width: 0.48rem /* 36/75 */;
       height: 0.48rem /* 36/75 */;
     }
+  }
+  .van-nav-bar {
+    background-color: #eb4343 !important;
   }
 }
 </style>

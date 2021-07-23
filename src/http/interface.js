@@ -35,6 +35,14 @@ export const goodsDetails = data => {
         data
     })
 }
+// 商品详情
+export const getGoodsDetail = data => {
+    return axios({
+        url: '/Goods/goodsDetail?id=' + data,
+        method: 'get',
+        // data
+    })
+}
 
 // 注册
 export const register = data => {
@@ -145,7 +153,7 @@ export const classification = data => {
 export const WXPay = data => {
     return axios({
         url: '/user/we_pay',
-        method: 'get',
+        method: 'post',
         data
     })
 }
@@ -322,6 +330,22 @@ export const getFriends = data => {
         data
     })
 }
+// 获取好友返佣
+export const getFriends2 = data => {
+    return axios({
+        url: '/user/friendList2',
+        method: 'post',
+        data
+    })
+}
+// 获取好友返佣
+export const getFriends3 = data => {
+    return axios({
+        url: '/user/friendList3',
+        method: 'post',
+        data
+    })
+}
 // 获取后台充值信息
 export const getReahargeInfo = data => {
     return axios({
@@ -406,6 +430,14 @@ export const sellOrderInfo = data => {
         data
     })
 }
+// 我的卖出商品详情
+export const blinfo = data => {
+    return axios({
+        url: '/user/blinfo',
+        method: 'post',
+        data
+    })
+}
 
 // // 好友列表
 // export const friendList = data => {
@@ -461,8 +493,8 @@ export const zhihuan = data => {
 // 银币兑换商品
 export const goodsCreateorder = data => {
     return axios({
-        url: '/dhgoods/createorder',
-        method: 'get',
+        url: '/dhgoods/createOrder',
+        method: 'post',
         data
     })
 }
@@ -470,8 +502,16 @@ export const goodsCreateorder = data => {
 // 用户提货
 export const tihuo = data => {
     return axios({
-        url: '/user/tihuo',
+        url: '/user/tihuo?id=' + data.id + '&addressId=' + data.addressId,
         method: 'get',
+    })
+}
+
+// 我的提货订单
+export const orderTihuo = data => {
+    return axios({
+        url: '/user/myOrdertihuo',
+        method: 'post',
         data
     })
 }
@@ -517,6 +557,166 @@ export const convert = data => {
     })
 }
 
+// 首页调取头像会员级别
+export const indexUserinfo = data => {
+    return axios({
+        url: '/index/userinfo',
+        method: 'post',
+        data
+    })
+}
+// 会员级别需购买入场卷
+export const goodsquan = data => {
+    return axios({
+        url: '/user/goodquan',
+        method: 'post',
+        data
+    })
+}
+// 转拍获取单价 转拍费 ， 余额
+export const zhuanpaiinfo = data => {
+    return axios({
+        url: '/user/zhuanpaiinfo',
+        method: 'post',
+        data
+    })
+}
+
+// 卖单 流拍列表
+export const liupai = data => {
+    return axios({
+        url: '/user/liupai',
+        method: 'post',
+        data
+    })
+}
+
+// 卖单 的已锁单列表
+export const yisuodan = data => {
+    return axios({
+        url: '/user/yisuodan',
+        method: 'get',
+    })
+}
+
+// 买入订单的置换
+export const mairuzhihuan = data => {
+    return axios({
+        url: '/user/mairuzhihuan',
+        method: 'post',
+        data
+    })
+}
+
+// 卖出订单的置换
+export const maichuzhihuan = data => {
+    return axios({
+        url: '/user/maichuzhihuan',
+        method: 'post',
+        data
+    })
+}
+
+// 卖出订单带被买
+export const daibeimai = data => {
+    return axios({
+        url: '/user/daibeimai',
+        method: 'post',
+        data
+    })
+}
+
+
+// 佣金 银币转增
+export const zhuanzeng = data => {
+    return axios({
+        url: '/user/zhuanzeng',
+        method: 'post',
+        data
+    })
+}
+
+// 提现手续费
+export const fee = data => {
+    return axios({
+        url: '/user/fee_sel',
+        method: 'post',
+        data
+    })
+}
+// 卖单  待确认收款
+export const shoukuan = data => {
+    return axios({
+        url: '/user/shoukuan',
+        method: 'post',
+        data
+    })
+}
+
+// 卖单  已完成
+export const yiwancheng = data => {
+    return axios({
+        url: '/user/yiwancheng',
+        method: 'post',
+        data
+    })
+}
+
+
+// 余额提现明细
+export const yunelog = data => {
+    return axios({
+        url: '/user/yunelog',
+        method: 'post',
+        data
+    })
+}
+
+// 佣金提现明细
+export const credit3log = data => {
+    return axios({
+        url: '/user/credit3log',
+        method: 'post',
+        data
+    })
+}
+
+
+// 积分兑换
+export const jfdh = data => {
+    return axios({
+        url: '/user/jfdh',
+        method: 'post',
+        data
+    })
+}
+
+// 是否关注公众号
+export const isSubscribe = data => {
+    return axios({
+        url: '/common/isSubscribe',
+        method: 'post',
+        data
+    })
+}
+
+// 银币
+export const credit1log = data => {
+    return axios({
+        url: '/user/credit1log',
+        method: 'post',
+        data
+    })
+}
+
+// 开放时间
+export const jifenduihuantanchuang = data => {
+    return axios({
+        url: '/Dhgoods/jifenduihuantanchuang',
+        method: 'post',
+        data
+    })
+}
 
 // 默认全部倒出
 export default {
@@ -528,6 +728,10 @@ export default {
     getReahargeInfo,
     //  获取好友
     getFriends,
+    //  获取好友
+    getFriends2,
+    //  获取好友
+    getFriends3,
     // 文章列表
     notifyList,
     // 文章详情
@@ -628,6 +832,8 @@ export default {
     goodsCreateorder,
     // 用户提货
     tihuo,
+    // 我的提货订单
+    orderTihuo,
     // 微信登陆测试
     wxlogin2,
     // 入场券列表
@@ -640,4 +846,44 @@ export default {
     userinfo,
     // 积分兑换
     convert,
+    // 首页调取头像会员级别
+    indexUserinfo,
+    // get 商品详情
+    getGoodsDetail,
+    // 会员级别需购买入场卷
+    goodsquan,
+    // 转拍查询余额等
+    zhuanpaiinfo,
+    // 卖单  已流拍列表
+    liupai,
+    // 买入订单的置换
+    mairuzhihuan,
+    // 卖出订单的置换
+    maichuzhihuan,
+    // 卖单 的已锁单列表
+    yisuodan,
+    // 带被买
+    daibeimai,
+    // 我的卖出商品详情 
+    blinfo,
+    // 转增
+    zhuanzeng,
+    // 提现手续费
+    fee,
+    // 卖单  待确认收款
+    shoukuan,
+    // 卖单  已完成
+    yiwancheng,
+    // y余额
+    yunelog,
+    // 佣金
+    credit3log,
+    // 积分
+    jfdh,
+    // 是否关注公众号
+    isSubscribe,
+    // 银币记录
+    credit1log,
+    // 积分开放时间
+    jifenduihuantanchuang,
 }

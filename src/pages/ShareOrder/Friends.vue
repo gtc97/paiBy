@@ -37,7 +37,7 @@
     methods: {
       onLoad() {
         this.$api.getFriends().then((res) => {
-          this.tableData = res.data
+          this.tableData = res.data.data
         })
       }
     }

@@ -3,8 +3,9 @@
     <router-link
       to="/withdrawal"
       class="fl"
+      v-if="drawrechage == 1"
       @click="handleDraw"
-      :style="'border: 1px solid ' + sysColor + ';'"
+      :style="'border: 1px solid ' + sysColor"
       >提现</router-link
     >
     <!-- <van-dialog v-model="drawShow" title="提现" show-cancel-button @confirm="sendDrawReq">
@@ -15,7 +16,7 @@
     <router-link
       to="/rechargetype"
       class="fr"
-      :style="'border: 1px solid ' + sysColor + ';'"
+      :style="'border: 1px solid ' + sysColor+ ';' + (drawrechage != 1 ?'width:9rem;':'')"
       >充值</router-link
     >
     <!-- <van-dialog v-model="show" title="充值" show-cancel-button @confirm="handleSaveRecharge">
@@ -51,6 +52,7 @@ export default {
       digit: "",
       drawMoney: "",
       drawShow: false,
+      drawrechage: '1',
       // payUrl: ''
       // showCode: false
       sysColor: localStorage.getItem("styleColor"),
@@ -60,6 +62,7 @@ export default {
     setTimeout(function () {
       this.sysColor = localStorage.getItem("styleColor");
     }, 1000);
+    this.getmoney()
   },
   methods: {
     handleDraw() {
@@ -81,6 +84,11 @@ export default {
     // 处理充值显示
     handleRechargeShow() {
       this.show = true;
+    },
+    getmoney(){
+      this.$api.drawHistory().then((res) => {
+        this.drawrechage = res.data.drawrechage
+      })
     },
     handleSaveRecharge() {
       console.log(this);

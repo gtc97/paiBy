@@ -2,7 +2,8 @@
     <div class="banner">
         <van-swipe :autoplay="10000" class="my-swipe" indicator-color="#FDB428">
             <van-swipe-item>
-                <img style="100%" :src="bannerImgs" alt />
+                <!-- <img style="100%" :src="bannerImgs" alt /> -->
+                <van-image :src="bannerImgs" fit="cover" />
             </van-swipe-item>
         </van-swipe>
     </div>
@@ -28,8 +29,8 @@ export default {
     overflow: hidden;
     border-radius: 0.266667rem /* 20/75 */;
     margin: auto;
-    width: 100%;//9.2rem /* 690/75 */;
-    height: 100%;//4.6667rem /* 350/75 */;
+    // width: 9.2rem /* 690/75 */;
+    height: 9.2rem /* 350/75 */;
     .my-swipe {
         height: 100%;
         .van-swipe-item {
@@ -56,6 +57,10 @@ export default {
             }
         }
     }
+}
+.van-image {
+    width: 100%;
+    height: 100%;
 }
 </style>
 

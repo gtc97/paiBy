@@ -27,20 +27,20 @@ export const constantRoutes = [{
         component: () =>
             import('@/pages/Dhgoods/goods')
     }]
-    },
+},
 
-    {
-        path: '/',
-        component: Layout,
-        redirect: '/dhgoodsdetails',
-        children: [{
-            path: 'dhgoodsdetails',
-            name: '兑换中心',
-            meta: { title: '兑换中心' },
-            component: () =>
-                import('@/pages/dhgoodsdetails/GoodsDetails')
-        }]
-    }, 
+// {
+//     path: '/',
+//     component: Layout,
+//     redirect: '/dhgoodsdetails',
+//     children: [{
+//         path: 'dhgoodsdetails',
+//         name: '兑换中心',
+//         meta: { title: '兑换中心' },
+//         component: () =>
+//             import('@/pages/DhgoodsDetails/GoodsDetails')
+//     }]
+// }, 
 {
     path: '/',
     component: Layout,
@@ -89,6 +89,12 @@ export const constantRoutes = [{
             import('@/pages/My/My')
     }]
 },
+{// 兑换商品详情
+    path: '/dhgoodsDetails/:id',
+    name: 'DhgoodsDetails',
+    component: () =>
+        import('@/pages/DhgoodsDetails/GoodsDetails')
+},
 {// 订单返佣
     path: '/goods',
     name: 'Goods',
@@ -113,6 +119,12 @@ export const constantRoutes = [{
     component: () =>
         import('@/pages/RakeBack/RakeBack')
 },
+    {// 订单返佣
+        path: '/RakeBackContent',
+        name: 'RakeBackContent',
+        component: () =>
+            import('@/pages/RakeBackContent/RakeBackContent')
+    },
 {//好友佣金明细
     path: '/friends',
     name: 'Friends',
@@ -228,6 +240,12 @@ export const constantRoutes = [{
     component: () =>
         import('@/pages/SellOrder/SellOrder')
 },
+{//我的卖单详情
+    path: '/SellGoodsDetails',
+    name: 'SellGoodsDetails',
+    component: () =>
+        import('@/pages/SellOrder/SellGoodsDetails')
+},
 {//提现
     path: '/withdrawal',
     name: 'Withdrawal',
@@ -276,52 +294,73 @@ export const constantRoutes = [{
     component: () =>
         import('@/pages/integral/integral')
 },
-    {// 银元明细
-        path: '/SilverBack',
-        name: 'SilverBack',
-        component: () =>
-            import('@/pages/Silver/SilverBack')
-    },
-    {// 银元转赠
-        path: '/SilverGive',
-        name: 'SilverGive',
-        component: () =>
-            import('@/pages/Silver/SilverGive')
-    },
-    {// 微信登陆
-        path: '/wxLogin',
-        name: 'wxLogin',
-        component: () =>
-            import('@/pages/wxLogin/wxLogin')
-    },
+{// 银元明细
+    path: '/SilverBack',
+    name: 'SilverBack',
+    component: () =>
+        import('@/pages/Silver/SilverBack')
+},
+{// 银元转赠
+    path: '/SilverGive',
+    name: 'SilverGive',
+    component: () =>
+        import('@/pages/Silver/SilverGive')
+},
+{// 佣金转赠
+    path: '/RewardsGive',
+    name: 'RewardsGive',
+    component: () =>
+        import('@/pages/rewardsNew/RewardsGive')
+},
+{// 微信登陆
+    path: '/wxLogin',
+    name: 'wxLogin',
+    component: () =>
+        import('@/pages/wxLogin/wxLogin')
+},
 
-    {// 规则指引
-        path: '/guize',
-        name: 'guize',
-        component: () =>
-            import('@/pages/guize/guize')
-    },
+{// 规则指引
+    path: '/guize',
+    name: 'guize',
+    component: () =>
+        import('@/pages/guize/guize')
+},
 
-    {// 积分兑换
-        path: '/convertIntegral',
-        name: 'convertIntegral',
-        component: () =>
-            import('@/pages/convertIntegral/convertIntegral')
-    },
-    {//  卖出订单详情
-        path: '/SellOrderDetails',
-        name: 'SellOrderDetails',
-        component: () =>
-            import('@/pages/SellOrder/SellOrderDetails')
-    }
-
-
-
+{// 积分兑换
+    path: '/convertIntegral',
+    name: 'convertIntegral',
+    component: () =>
+        import('@/pages/convertIntegral/convertIntegral')
+},
+{//  卖出订单详情
+    path: '/SellOrderDetails',
+    name: 'SellOrderDetails',
+    component: () =>
+        import('@/pages/SellOrder/SellOrderDetails')
+},
+{//  实物订单
+    path: '/dingdan',
+    name: 'dingdan',
+    component: () =>
+        import('@/pages/dingdan/dingdan')
+},
+{//  余额提现明细
+    path: '/balanceType',
+    name: 'balanceType',
+    component: () =>
+        import('@/pages/balanceType/balanceType')
+},
+{//  佣金提现明细
+    path: '/commissionType',
+    name: 'commissionType',
+    component: () =>
+        import('@/pages/commissionType/commissionType')
+}
 
 ]
 
 const createRouter = () => new Router({
-    // mode: 'history', // require service support
+    mode: 'hash', // require service support  history
     scrollBehavior: () => ({ y: 0 }),
     routes: constantRoutes
 })

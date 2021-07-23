@@ -1,19 +1,21 @@
 <template>
-  <div class="container">
+  <div>
     <HomeHeader/>
     <HomeBanner :banner-list="bannerList"/>
-    <HomeBroadcast/>
-    <div class="userInfo">
-      <div class="left">
-        <img src="../../../static/avatar.jpg" alt="">
+    <div  class="container">
+      <HomeBroadcast/>
+      <div class="userInfo">
+        <div class="left">
+          <img :src="userInfo.avater || '../../../static/avatar.jpg'" alt="">
+        </div>
+        <div class="right">
+          <div>{{userInfo.userName || userInfo.nickname || '游客'}}</div>
+          <img src="../../../static/huiyuan.png" alt="">
+          <span style="font-size: 0.355rem;color:#D8413F;">{{userInfo.user_level || '普通用户'}}</span>
+        </div>
       </div>
-      <div class="right">
-        <div>{{userInfo.userName || userInfo.nickname || '游客'}}</div>
-        <img src="../../../static/location_icon1.png" alt="">
-        <span style="font-size: 0.355rem;color:#D8413F;">{{userInfo.vip == 0 ? '普通用户' : 'VIP用户'}}</span>
-      </div>
+      <HomeAuction :goods-cat-list="goodsCatList"/>
     </div>
-    <HomeAuction :goods-cat-list="goodsCatList"/>
   </div>
 </template>
 <script>
@@ -21,6 +23,8 @@ import HomeHeader from './components/HomeHeader'
 import HomeBanner from './components/HomeBanner'
 import HomeBroadcast from './components/HomeBroadcast'
 import HomeAuction from './components/HomeAuction'
+
+import { Dialog } from 'vant'
 
 export default {
   name: 'Home',
@@ -40,30 +44,55 @@ export default {
     }
   },
   created(){
-    this.userInfo = localStorage.getItem('USER')
-    this.getuserinfo()
-  },
-  mounted() {
+    var token = localStorage.getItem("TOKEN");
+    this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
+    var is_bind = this.userInfo.is_bind
+    console.log(this.userInfo)
+    console.log(is_bind)
+    if (token && (is_bind == 0 || is_bind == null || is_bind == undefined )) {
+      this.$router.push({ name: "Register" });
+      return
+    }
     this.getList()
+    this.getuserinfo()
     this.getBannerList()
-    // this.getCkpayinfo()
+    this.getCkpayinfo()
   },
   methods: {
+    // navTo(){
+    //   window.location.href= 'https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=Mzg5MTU5ODQzNg==&scene=124&uin=&key=&devicetype=Windows+10+x64&version=63020170&lang=zh_CN&a8scene=7&fontgear=2'
+    // },
+    // getgunzhu() {
+    //   var openid = JSON.parse(localStorage.getItem("userInfo")).openid;
+    //   this.$api.isSubscribe({ openid: openid }).then((res) => {
+    //     if (res.data.subscribe == 0) {
+    //       this.modelShow = true;
+    //     }
+    //   });
+    // },
     getuserinfo(){
       var that = this
+      that.userInfo = {userName:'游客',vipName:'用户',userPhone:'',avater:''}
       that.$api.userinfo().then((res) => {
         console.log(res)
         if(res.status == 1){
           that.userInfo = res.data
         }else{
-          that.userInfo = {name:'游客',vip:0}
+          that.userInfo = {userName:'游客',vipName:'用户',userPhone:'',avater:''}
         }
       })
     },
     getCkpayinfo(){
+      var that = this
       this.$api.ckpayinfo().then((res) => {
-        if(res.data.msg == '未设置收款信息' && res.data.status == 1010){
+        if(res.msg == '未设置收款信息'){
           this.titShow = true
+          Dialog.confirm({
+            title: '未设置收款信息',
+            message: '您还没有设置收款信息,前去设置?'
+          }).then(() => {
+            that.$router.push({ name: "Seting" });
+          })
         }
       })
     },
@@ -108,10 +137,11 @@ export default {
       img{
         margin-right: 0.2rem;
         margin-top: 0.4rem;
-        height: 0.45rem;
-        width: 0.38rem;
+        height: 0.4rem;
+        width: 0.4rem;
       }
     }
   }
-</style>
+
+</style>  
 

@@ -42,7 +42,7 @@
         <small>（请点击下方列表查看二维码）</small>
       </div>
       <van-radio-group v-model="radio" class="pay-type-list">
-        <div v-for="item of payTypeList" :key="item.type" class="pay-type-item">
+        <div v-for="item of payType" :key="item.type" class="pay-type-item">
           <div v-if="item.type == 2">
             <div class="title">
               <div :class="'icon-left ' + item.iconClass"></div>
@@ -67,11 +67,23 @@
               checked-color="#FDB428"
             />
           </div>
+          <div v-if="item.type == 3">
+            <div class="title">
+              <div :class="'icon-left ' + item.iconClass"></div>
+              {{ item.name }}
+            </div>
+
+            <van-radio
+              :name="item.type"
+              class="icon-right"
+              checked-color="#FDB428"
+            />
+          </div>
         </div>
       </van-radio-group>
       <br />
       <div v-for="(item, index) in payTypeList" :key="index">
-        <div v-if="radio == 1 && item.type == 1">
+        <div v-if="item.type == 1 && radio == 1">
           <ul style="font-size: 0.4em; line-height: 2em; width: 88%">
             <li>
               银行名称：{{ item.bankName }}
@@ -104,8 +116,7 @@
             </li>
           </ul>
         </div>
-
-        <div v-if="radio == 2 && item.type == 2">
+        <div v-show="item.type == 2 && radio == 2">
           <ul style="font-size: 0.4em; line-height: 2em">
             <li>
               收款账号：{{ item.payAccount }}
@@ -115,11 +126,43 @@
               ></i>
             </li>
             <li>
-              支付姓名：{{ item.phone }}
-              <i class="el-icon-document-copy" @click="copyUrl(item.phone)"></i>
+              支付姓名：{{ item.name }}
+              <i class="el-icon-document-copy" @click="copyUrl(item.name)"></i>
             </li>
             <li>
               <img :src="baseUrl + item.img" style="width: 60vh" alt />
+            </li>
+            <li v-show="item.payPic">
+              <img
+                :src="baseUrl + item.payPic"
+                style="width: 60vh"
+                alt
+              />
+            </li>
+          </ul>
+        </div>
+        <div v-show="item.type == 3 && radio == 3">
+          <ul style="font-size: 0.4em; line-height: 2em">
+            <li>
+              收款账号：{{ item.payAccount }}
+              <i
+                class="el-icon-document-copy"
+                @click="copyUrl(item.payAccount)"
+              ></i>
+            </li>
+            <li>
+              支付姓名：{{ item.name }}
+              <i class="el-icon-document-copy" @click="copyUrl(item.name)"></i>
+            </li>
+            <li>
+              <img :src="baseUrl + item.img" style="width: 60vh" alt />
+            </li>
+            <li v-show="item.payPic">
+              <img
+                :src="baseUrl + item.payPic"
+                style="width: 60vh"
+                alt
+              />
             </li>
           </ul>
         </div>
@@ -174,13 +217,13 @@ export default {
   data() {
     return {
       baseUrl: baseConfig.apiurl,
-      radio: 1,
+      radio: 3,
       payTypeList: [],
       payType: [
         {
-          type: 1,
-          name: "银行卡",
-          iconClass: "icon2",
+          type: 3,
+          name: "微信",
+          iconClass: "icon4",
         },
         {
           type: 2,
@@ -188,10 +231,10 @@ export default {
           iconClass: "icon3",
         },
         {
-          type: 2,
-          name: "微信",
-          iconClass: "icon4",
-        },
+          type: 1,
+          name: "银行卡",
+          iconClass: "icon2",
+        }
       ],
       fileList: [],
       show: false,
@@ -209,10 +252,11 @@ export default {
         for (let kl = 0; kl < this.payType.length; kl++) {
           if (this.userPayInfo[k].type == this.payType[kl].type) {
             this.userPayInfo[k].iconClass = this.payType[kl].iconClass;
-            this.userPayInfo[k].name = this.payType[kl].name;
+            this.userPayInfo[k].payName = this.payType[kl].name;
           }
         }
       }
+      
       this.payTypeList = this.userPayInfo;
       return;
     },
@@ -263,7 +307,13 @@ export default {
       //         console.log(res)
       //     })
       // }
-      this.show = true;
+      for(var i=0;i<this.payTypeList.length;i++){
+        if(this.payTypeList[i].type == this.radio){
+          this.show = true
+        }else{
+          Toast("暂未设置该支付方式！");
+        }
+      }
     },
     handleSave() {
       if (!this.payImgUrl) {
@@ -275,7 +325,7 @@ export default {
         .then((res) => {
           if (res.status === 1) {
             Toast(res.msg);
-            this.$router.push({ path: "/my" });
+            this.$router.push({ path: "/pay?active=already" }); ///already
           } else {
             Toast(res.msg);
           }
@@ -536,7 +586,7 @@ export default {
     height: 0.9333rem /* 70/75 */;
     line-height: 0.9333rem /* 70/75 */;
     text-align: center;
-    color: #333;
+    color: #fff;
     font-size: 0.4267rem /* 32/75 */;
     background-color: #fdb428;
   }
