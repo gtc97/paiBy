@@ -1,7 +1,8 @@
 # paimai
 
-<!-- 拍卖 恒鉴国际 -->
+拍卖类似平台
 vue h5页面
+
 > A Vue.js project
 
 ## Build Setup
